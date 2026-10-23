@@ -81,10 +81,21 @@ input:focus-visible {
   box-shadow: 0 28px 70px rgba(40, 58, 84, 0.13);
   overflow: clip;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .app-content {
-  padding: max(16px, env(safe-area-inset-top)) 22px 28px;
+  padding: max(16px, env(safe-area-inset-top)) 22px 20px;
   min-width: 0;
+  flex: 1;
+}
+.app-footer {
+  margin-top: auto;
+  padding: 12px 22px 6px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted-2);
+  letter-spacing: -0.01em;
 }
 button {
   border: 0;

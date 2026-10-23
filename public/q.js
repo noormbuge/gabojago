@@ -1978,8 +1978,8 @@ function renderHome() {
       <button class="mode-card new" onclick="selectMode('new')"><span class="mode-icon">${docSVG}</span><span class="mode-copy"><b>(신) 구술</b><small>101 ~ 190 · ${NEW_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
       <button class="mode-card all" onclick="selectMode('all')"><span class="mode-icon">${starSVG}</span><span class="mode-copy"><b>종합</b><small>(구) 구술 + (신) 구술 · ${ALL_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
     </section>
-    <section class="home-footer" aria-label="퀴즈 안내"><div class="feature"><strong>${settings.questionCount}문제</strong><span>한 게임 분량</span></div><div class="feature"><strong>${timeText}</strong><span>문제별 제한 시간</span></div><div class="feature"><strong>앞글자</strong><span>힌트 제공</span></div></section>
-    <p class="small-note">문제 제목을 보고 소리 내어 답변한 뒤, 원문 정답을 확인하세요.</p>`;
+    <section class="home-footer" aria-label="퀴즈 안내"><div class="feature"><strong>${settings.questionCount}문제</strong><span>한 게임 분량</span></div><div class="feature"><strong>${timeText}</strong><span>문제별 제한 시간</span></div><div class="feature"><strong>앞 글자</strong><span>힌트 제공</span></div></section>
+    <p class="small-note">문제를 보고 소리 내어 답변한 뒤, 정답을 확인하세요.</p>`;
 }
 function renderSetup() {
   const mode = selectedMode;
@@ -1993,7 +1993,7 @@ function renderSetup() {
       <div class="setting-line"><div><b>출제 방식</b><p>매 게임 문제 순서가 달라집니다.</p></div><span class="choice-chip active">랜덤</span></div>
       <div class="setting-line"><div><b>문제 수</b><p id="pref-qcount-desc">매 게임마다 무작위 ${settings.questionCount}문제 출제</p></div>${renderDialAnchor('qcount')}</div>
       <div class="setting-line"><div><b>제한 시간</b><p id="pref-time-desc">문제당 ${settings.timeLimit}초 · 종료 시 자동 정답 표시</p></div>${renderDialAnchor('time')}</div>
-      <div class="setup-info"><span id="setup-count-pill" class="pill">✓ 중복 없이 ${actualCount}문제</span><span class="pill">✓ 앞글자 힌트</span></div>
+      <div class="setup-info"><span id="setup-count-pill" class="pill">✓ 중복 없이 ${actualCount}문제</span><span class="pill">✓ 앞 글자 힌트</span></div>
     </section>
     <div class="action-area"><button class="primary-btn" onclick="startQuiz('${mode}')">시작하기&nbsp; ${arrowSVG}</button></div>
     <p class="small-note">정답은 기능 교재 원문 표현을 기준으로 표시됩니다.</p>`;
@@ -2003,10 +2003,7 @@ function renderQuiz() {
   if (!q)
     return '<div class="panel">문항을 불러오지 못했습니다. 처음 화면으로 돌아가 다시 시작해주세요.</div>';
   const pct = Math.max(0, ((currentIndex + 1) / queue.length) * 100);
-  const status =
-    timeLeft <= 0
-      ? '시간이 종료되었습니다.'
-      : '다음에 대한 개념을 설명해보세요.';
+  const status = timeLeft <= 0 ? '시간이 종료되었습니다.' : ' ';
   const hintBlock =
     hintVisible && settings.showHint
       ? `<section class="hint-panel"><span class="hint-lightbulb">💡</span><div class="hint-content"><b>힌트</b><p>${escapeHTML(q.hint || '힌트 없음')}</p></div><button class="hint-close" onclick="toggleHint()" aria-label="힌트 닫기">×</button></section>`
@@ -2015,9 +2012,9 @@ function renderQuiz() {
     ? `
     <section class="answer-panel"><div class="answer-head"><strong>정답</strong><span class="answer-badge">모범 답안</span></div><div class="answer-text">${escapeHTML(q.answer)}</div></section>
     <section class="self-grade"><h3 class="section-label">내 답변을 스스로 평가하세요</h3><div class="grade-grid">
-      <button class="grade-btn ${selectedGrade === 'O' ? 'selected' : ''}" data-grade="O" onclick="rateAnswer('O')"><span class="grade-symbol">○</span><b>완전암기</b><small>막힘없이 답변</small></button>
-      <button class="grade-btn ${selectedGrade === '△' ? 'selected' : ''}" data-grade="△" onclick="rateAnswer('△')"><span class="grade-symbol">△</span><b>부분암기</b><small>일부가 헷갈림</small></button>
-      <button class="grade-btn ${selectedGrade === 'X' ? 'selected' : ''}" data-grade="X" onclick="rateAnswer('X')"><span class="grade-symbol">×</span><b>다시암기</b><small>답변이 어려움</small></button>
+      <button class="grade-btn ${selectedGrade === 'O' ? 'selected' : ''}" data-grade="O" onclick="rateAnswer('O')"><span class="grade-symbol">○</span><b>완전 암기</b><small>막힘없이 답변</small></button>
+      <button class="grade-btn ${selectedGrade === '△' ? 'selected' : ''}" data-grade="△" onclick="rateAnswer('△')"><span class="grade-symbol">△</span><b>부분 암기</b><small>일부가 헷갈림</small></button>
+      <button class="grade-btn ${selectedGrade === 'X' ? 'selected' : ''}" data-grade="X" onclick="rateAnswer('X')"><span class="grade-symbol">×</span><b>다시 암기</b><small>답변이 어려움</small></button>
     </div><p class="explain-note">본인이 실제로 말한 답변을 기준으로 선택해주세요.</p></section>`
     : '';
   const totalTime = Math.max(1, settings.timeLimit);
@@ -2040,17 +2037,17 @@ function renderResults() {
   const details = sessionResults
     .map(
       (r, i) => `
-    <button class="result-row" onclick="openDetail(${i})"><span class="result-index">${i + 1}</span><span class="row-question"><b>${escapeHTML(r.item.id)} ${escapeHTML(r.item.title)}</b><small>${r.grade === 'O' ? '완전암기' : r.grade === '△' ? '부분암기' : '다시암기'}</small></span><span class="grade-mini ${r.grade}">${r.grade === 'X' ? '×' : r.grade}</span><span class="row-chevron">›</span></button>`,
+    <button class="result-row" onclick="openDetail(${i})"><span class="result-index">${i + 1}</span><span class="row-question"><b>${escapeHTML(r.item.id)} ${escapeHTML(r.item.title)}</b><small>${r.grade === 'O' ? '완전 암기' : r.grade === '△' ? '부분 암기' : '다시 암기'}</small></span><span class="grade-mini ${r.grade}">${r.grade === 'X' ? '×' : r.grade}</span><span class="row-chevron">›</span></button>`,
     )
     .join('');
   const allO = good === total;
   return `
     <div class="topbar"><button class="icon-btn back-btn" onclick="goHome()" aria-label="처음 화면"></button><h2>학습 결과</h2><button class="icon-btn" onclick="openSettings()" aria-label="설정">${gearSVG}</button></div>
     <section class="result-hero"><span class="success-icon">✓</span><h1>${allO ? '훌륭해요!' : '학습을 완료했어요'}</h1><p>${modeName(selectedMode)} · ${total}문제 학습 완료<br>스스로 평가한 암기 상태를 확인해보세요.</p></section>
-    <section class="summary-grid"><div class="summary-stat good"><span class="num">${good}</span><b>완전암기</b><small>바로 답변 가능</small></div><div class="summary-stat partial"><span class="num">${partial}</span><b>부분암기</b><small>한 번 더 복습</small></div><div class="summary-stat retry"><span class="num">${retry}</span><b>다시암기</b><small>반복 학습 추천</small></div></section>
+    <section class="summary-grid"><div class="summary-stat good"><span class="num">${good}</span><b>완전 암기</b><small>바로 답변 가능</small></div><div class="summary-stat partial"><span class="num">${partial}</span><b>부분 암기</b><small>한 번 더 복습</small></div><div class="summary-stat retry"><span class="num">${retry}</span><b>다시 암기</b><small>반복 학습 추천</small></div></section>
     <div class="list-heading"><b>문제별 결과</b><span>${total}문항</span></div>
     <section class="result-list">${details}</section>
-    <div class="result-actions"><button class="primary-btn" onclick="startRetry()">${retry + partial ? '다시암기 문항 복습하기' : '이번 문항 다시 풀기'}</button><button class="secondary-btn" onclick="restartSameMode()">같은 유형으로 새 퀴즈</button><button class="secondary-btn" onclick="goHome()">처음으로</button></div>`;
+    <div class="result-actions"><button class="primary-btn" onclick="startRetry()">${retry + partial ? '틀린 문항 복습하기' : '이번 문항 다시 풀기'}</button><button class="secondary-btn" onclick="restartSameMode()">같은 유형으로 새 퀴즈</button><button class="secondary-btn" onclick="goHome()">처음으로</button></div>`;
 }
 function renderDetail() {
   const result = sessionResults[detailIndex];
@@ -2058,10 +2055,10 @@ function renderDetail() {
     return `<div class="topbar"><button class="icon-btn back-btn" onclick="backToResults()" aria-label="결과"></button><h2>결과 상세</h2><span></span></div>`;
   const gradeLabel =
     result.grade === 'O'
-      ? '완전암기'
+      ? '완전 암기'
       : result.grade === '△'
-        ? '부분암기'
-        : '다시암기';
+        ? '부분 암기'
+        : '다시 암기';
   const gradeSymbol = result.grade === 'X' ? '×' : result.grade;
   return `
     <div class="topbar"><button class="icon-btn back-btn" onclick="backToResults()" aria-label="결과 목록"></button><h2>결과 상세</h2><button class="icon-btn" onclick="backToResults()" aria-label="닫기">×</button></div>
@@ -2081,7 +2078,8 @@ function renderSettings() {
     <section class="panel settings-section"><h3>읽기 설정</h3>
       <div class="preference"><div class="pref-copy"><b>정답 글자 크기</b><p>긴 답변을 편하게 확인할 수 있어요.</p></div><div class="font-choices"><button class="${settings.answerFont === 14 ? 'active' : ''}" onclick="setAnswerFont(14)">보통</button><button class="${settings.answerFont === 16 ? 'active' : ''}" onclick="setAnswerFont(16)">크게</button><button class="${settings.answerFont === 18 ? 'active' : ''}" onclick="setAnswerFont(18)">더 크게</button></div></div>
     </section>
-    <p class="inline-info">문항과 정답은 제공된 PDF를 바탕으로 구성했습니다. 참고·당구장 표시를 포함한 답변 원문 전체가 표시되며, 힌트에서는 구분어와 참고 문구를 제외합니다.</p>
+    <p class="inline-info">문항과 정답은 기능 교재를 토대로 구성했습니다.</p>
+    <p class="inline-info">참고·당구장 표시를 포함한 답변 원문 전체가 표시되며, 힌트에서는 구분어와 참고 문구를 제외합니다.</p>
     <div class="action-area"><button class="primary-btn" onclick="backFromSettings()">설정 완료</button></div>`;
 }
 function render() {
