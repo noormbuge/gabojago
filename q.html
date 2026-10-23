@@ -1,0 +1,2898 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#eef3fa" />
+    <meta
+      name="description"
+      content="제2종 전기차량 운전면허 기능시험 구술 암기를 위한 10문제 랜덤 퀴즈"
+    />
+    <title>구술 암기 퀴즈</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #172435;
+        --muted: #718096;
+        --muted-2: #8a97a8;
+        --bg: #edf2f8;
+        --paper: #ffffff;
+        --line: #e3eaf3;
+        --blue: #2289f3;
+        --blue-soft: #e7f2ff;
+        --teal: #1b9d91;
+        --teal-soft: #e3f5f0;
+        --purple: #8c65f7;
+        --purple-soft: #f1ebff;
+        --red: #ed5f68;
+        --red-soft: #fff0f1;
+        --amber: #ed9a36;
+        --amber-soft: #fff5e8;
+        --shadow: 0 18px 42px rgba(52, 73, 102, 0.1);
+        --answer-font: 15px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        min-height: 100%;
+        background: var(--bg);
+        overscroll-behavior-y: contain;
+      }
+      body {
+        margin: 0;
+        min-height: 100%;
+        font-family:
+          Inter,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          "Noto Sans KR",
+          Roboto,
+          Arial,
+          sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(
+            ellipse at 10% 8%,
+            rgba(208, 226, 250, 0.45),
+            transparent 32%
+          ),
+          radial-gradient(
+            ellipse at 95% 75%,
+            rgba(223, 232, 250, 0.5),
+            transparent 30%
+          ),
+          linear-gradient(135deg, #eef2f8 0%, #e9eff7 50%, #f4f7fb 100%);
+        -webkit-font-smoothing: antialiased;
+      }
+      button,
+      input {
+        font: inherit;
+      }
+      button {
+        touch-action: manipulation;
+      }
+      button:focus-visible,
+      input:focus-visible {
+        outline: 3px solid rgba(34, 137, 243, 0.3);
+        outline-offset: 2px;
+      }
+      .app-shell {
+        width: min(100%, 492px);
+        min-height: min(920px, 100dvh);
+        margin: 24px auto;
+        padding: 0 0 max(18px, env(safe-area-inset-bottom));
+        border: 1px solid rgba(255, 255, 255, 0.84);
+        border-radius: 30px;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(247, 250, 253, 0.82)
+        );
+        box-shadow: 0 28px 70px rgba(40, 58, 84, 0.13);
+        overflow: clip;
+        position: relative;
+      }
+      .app-content {
+        padding: max(16px, env(safe-area-inset-top)) 22px 28px;
+        min-width: 0;
+      }
+      button {
+        border: 0;
+        cursor: pointer;
+      }
+      .icon-btn {
+        width: 38px;
+        height: 38px;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 13px;
+        background: transparent;
+        color: #354255;
+        font-size: 23px;
+        line-height: 1;
+        flex: 0 0 auto;
+      }
+      .icon-btn:hover {
+        background: #eff4fa;
+      }
+      .topbar {
+        height: 44px;
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) 42px;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      .topbar h2 {
+        margin: 0;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: -0.035em;
+      }
+      .topbar .subhead {
+        font-size: 11px;
+        line-height: 1.4;
+        color: var(--muted);
+        font-weight: 500;
+        text-align: center;
+        margin-top: 3px;
+      }
+      .back-btn {
+        font-size: 0;
+      }
+      .back-btn:before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-left: 1.8px solid currentColor;
+        border-bottom: 1.8px solid currentColor;
+        transform: rotate(45deg);
+        display: block;
+        margin-left: 7px;
+      }
+      .hero {
+        padding: 34px 0 28px;
+        text-align: center;
+      }
+      .hero-mark {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 20px;
+        border-radius: 25px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(140deg, #e2edff, #f7fbff);
+        box-shadow:
+          inset 0 1px 0 #fff,
+          0 9px 22px rgba(76, 124, 196, 0.08);
+        color: var(--blue);
+      }
+      .hero-mark svg {
+        width: 31px;
+        height: 31px;
+      }
+      .hero h1 {
+        font-size: 25px;
+        line-height: 1.25;
+        letter-spacing: -0.065em;
+        margin: 0 0 9px;
+        font-weight: 850;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.65;
+        letter-spacing: -0.02em;
+      }
+      .mode-list {
+        display: grid;
+        gap: 11px;
+        margin-top: 7px;
+      }
+      .mode-card {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        width: 100%;
+        min-height: 83px;
+        text-align: left;
+        padding: 13px 15px;
+        border: 1px solid var(--line);
+        border-radius: 19px;
+        background: rgba(255, 255, 255, 0.74);
+        box-shadow: 0 6px 18px rgba(58, 80, 110, 0.035);
+        transition:
+          transform 0.16s ease,
+          box-shadow 0.16s ease,
+          border-color 0.16s ease;
+      }
+      .mode-card:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 22px rgba(58, 80, 110, 0.08);
+      }
+      .mode-card:active {
+        transform: scale(0.99);
+      }
+      .mode-card.old {
+        background: linear-gradient(
+          110deg,
+          rgba(231, 244, 255, 0.86),
+          rgba(255, 255, 255, 0.95)
+        );
+        border-color: #d6eaff;
+      }
+      .mode-card.new {
+        background: linear-gradient(
+          110deg,
+          rgba(228, 247, 241, 0.82),
+          rgba(255, 255, 255, 0.95)
+        );
+        border-color: #d5f0e7;
+      }
+      .mode-card.all {
+        background: linear-gradient(
+          110deg,
+          rgba(243, 237, 255, 0.82),
+          rgba(255, 255, 255, 0.95)
+        );
+        border-color: #e8ddff;
+      }
+      .mode-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+      }
+      .old .mode-icon {
+        color: var(--blue);
+        background: #dff0ff;
+      }
+      .new .mode-icon {
+        color: var(--teal);
+        background: #d9f1ea;
+      }
+      .all .mode-icon {
+        color: var(--purple);
+        background: #ece3ff;
+      }
+      .mode-icon svg {
+        width: 22px;
+        height: 22px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .mode-copy {
+        min-width: 0;
+        flex: 1;
+      }
+      .mode-copy b {
+        display: block;
+        font-size: 15px;
+        margin: 0 0 4px;
+        font-weight: 800;
+        letter-spacing: -0.035em;
+      }
+      .mode-copy small {
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: -0.01em;
+      }
+      .card-chevron {
+        font-size: 25px;
+        color: #428fe8;
+        font-weight: 300;
+        padding: 0 1px;
+      }
+      .new .card-chevron {
+        color: var(--teal);
+      }
+      .all .card-chevron {
+        color: var(--purple);
+      }
+      .home-footer {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 22px;
+        padding: 13px 8px;
+        border: 1px solid rgba(223, 231, 241, 0.82);
+        border-radius: 17px;
+        background: rgba(255, 255, 255, 0.45);
+      }
+      .feature {
+        text-align: center;
+        min-width: 0;
+      }
+      .feature strong {
+        display: block;
+        font-size: 13px;
+        font-weight: 800;
+        margin-bottom: 4px;
+      }
+      .feature span {
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .small-note {
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.55;
+        text-align: center;
+        margin: 18px 4px 0;
+      }
+      .panel {
+        padding: 17px 16px;
+        border-radius: 20px;
+        border: 1px solid rgba(224, 232, 242, 0.9);
+        background: rgba(255, 255, 255, 0.75);
+        box-shadow: 0 8px 24px rgba(49, 72, 104, 0.045);
+      }
+      .mode-summary {
+        text-align: center;
+        padding: 8px 0 22px;
+      }
+      .mode-summary h1 {
+        font-size: 23px;
+        letter-spacing: -0.06em;
+        margin: 0 0 9px;
+      }
+      .mode-summary p {
+        font-size: 12px;
+        line-height: 1.6;
+        color: var(--muted);
+        margin: 0;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border-radius: 999px;
+        padding: 7px 11px;
+        background: #eef4fa;
+        color: #53657d;
+        font-size: 11px;
+        font-weight: 750;
+      }
+      .setup-panel {
+        margin-top: 3px;
+      }
+      .section-label {
+        font-size: 12px;
+        font-weight: 800;
+        margin: 0 0 12px;
+        letter-spacing: -0.02em;
+      }
+      .setting-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 18px;
+      }
+      .setting-line:first-of-type {
+        margin-top: 0;
+      }
+      .setting-line b {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+      .setting-line p {
+        margin: 0;
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .choice-chip {
+        border-radius: 999px;
+        padding: 9px 15px;
+        background: #f0f4f9;
+        color: #8390a1;
+        font-size: 11px;
+        font-weight: 750;
+        white-space: nowrap;
+      }
+      .choice-chip.active {
+        color: var(--blue);
+        background: #e7f0ff;
+        border: 1px solid #cbdfff;
+        box-shadow: 0 2px 3px rgba(62, 122, 211, 0.04);
+      }
+      .setup-info {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 16px 0 0;
+      }
+      .primary-btn {
+        width: 100%;
+        min-height: 49px;
+        border-radius: 17px;
+        padding: 13px 18px;
+        color: #fff;
+        background: linear-gradient(180deg, #2c3949, #1d2835);
+        box-shadow: 0 8px 16px rgba(23, 37, 54, 0.13);
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: -0.025em;
+        transition:
+          transform 0.15s ease,
+          opacity 0.15s ease;
+      }
+      .primary-btn:hover {
+        background: linear-gradient(180deg, #37495d, #202c3b);
+      }
+      .primary-btn:active {
+        transform: scale(0.99);
+      }
+      .primary-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.38;
+        box-shadow: none;
+      }
+      .secondary-btn {
+        width: 100%;
+        min-height: 45px;
+        border-radius: 15px;
+        padding: 11px 16px;
+        color: #42526a;
+        background: #eef3f9;
+        font-weight: 750;
+        font-size: 12px;
+      }
+      .action-area {
+        margin-top: 23px;
+      }
+      .quiz-top {
+        display: grid;
+        grid-template-columns: 39px 1fr 39px;
+        align-items: center;
+        gap: 5px;
+        margin: 0 0 15px;
+      }
+      .quiz-count {
+        text-align: center;
+        font-weight: 800;
+        font-size: 12px;
+        letter-spacing: 0.02em;
+      }
+      .quiz-progress {
+        height: 6px;
+        border-radius: 99px;
+        background: #e6ebf3;
+        overflow: hidden;
+        margin: 0 0 22px;
+      }
+      .quiz-progress-fill {
+        height: 100%;
+        width: 0;
+        border-radius: 99px;
+        background: linear-gradient(90deg, #32b49a, #248c89);
+        transition: width 0.25s ease;
+      }
+      .timer-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 17px;
+        margin-bottom: 22px;
+      }
+      .timer-ring {
+        width: 65px;
+        height: 65px;
+        position: relative;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+      }
+      .timer-ring svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
+      .timer-ring circle {
+        fill: none;
+        stroke-width: 4.5;
+      }
+      .timer-track {
+        stroke: #e3e8ef;
+      }
+      .timer-progress {
+        stroke: #31ad8b;
+        stroke-linecap: round;
+        stroke-dasharray: 176;
+        stroke-dashoffset: 0;
+        transition:
+          stroke-dashoffset 0.4s linear,
+          stroke 0.2s ease;
+      }
+      .timer-ring.urgent .timer-progress {
+        stroke: var(--red);
+      }
+      .timer-number {
+        position: relative;
+        font-size: 19px;
+        font-weight: 850;
+        font-variant-numeric: tabular-nums;
+        color: #269c84;
+      }
+      .timer-ring.urgent .timer-number {
+        color: var(--red);
+      }
+      .hint-btn {
+        border: 1px solid #e1e9f5;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.75);
+        padding: 10px 13px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 750;
+        color: #5d6c82;
+        box-shadow: 0 4px 10px rgba(54, 78, 110, 0.045);
+      }
+      .hint-btn svg {
+        width: 15px;
+        height: 15px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.8;
+      }
+      .hint-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .prompt-wrap {
+        text-align: center;
+        padding: 2px 0 20px;
+      }
+      .question-tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 9px;
+        border-radius: 8px;
+        background: #eef4fb;
+        color: #74849a;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        margin-bottom: 12px;
+      }
+      .prompt-wrap h1 {
+        font-size: 21px;
+        line-height: 1.53;
+        letter-spacing: -0.055em;
+        font-weight: 850;
+        margin: 0;
+        overflow-wrap: anywhere;
+        word-break: keep-all;
+      }
+      .prompt-helper {
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin: 12px 0 0;
+      }
+      .hint-panel {
+        padding: 12px 13px;
+        border-radius: 15px;
+        border: 1px solid #d4e7fc;
+        background: linear-gradient(110deg, #f0f7ff, #fff);
+        margin: 0 0 13px;
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+      }
+      .hint-lightbulb {
+        width: 29px;
+        height: 29px;
+        border-radius: 10px;
+        background: #dfedff;
+        color: #4b94ed;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        font-size: 15px;
+      }
+      .hint-content {
+        min-width: 0;
+        flex: 1;
+      }
+      .hint-content b {
+        font-size: 11px;
+        display: block;
+        margin: 1px 0 6px;
+      }
+      .hint-content p {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        color: #2e6fae;
+        overflow-wrap: anywhere;
+      }
+      .hint-close {
+        background: transparent;
+        color: #8a9bb2;
+        font-size: 18px;
+        padding: 1px 3px;
+      }
+      .answer-panel {
+        margin: 0 0 14px;
+        padding: 15px 14px;
+        border-radius: 17px;
+        border: 1px solid #dfe8f2;
+        background: linear-gradient(
+          135deg,
+          rgba(247, 250, 254, 0.98),
+          rgba(255, 255, 255, 0.98)
+        );
+        box-shadow: inset 0 1px 0 #fff;
+        animation: rise 0.22s ease;
+      }
+      .answer-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .answer-head strong {
+        font-size: 12px;
+        font-weight: 850;
+      }
+      .answer-badge {
+        font-size: 10px;
+        color: #278b7c;
+        background: #e2f5ef;
+        padding: 5px 8px;
+        border-radius: 8px;
+        font-weight: 800;
+      }
+      .answer-text {
+        font-size: var(--answer-font);
+        line-height: 1.75;
+        color: #2a3747;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: normal;
+        letter-spacing: -0.02em;
+        user-select: text;
+        max-width: 100%;
+      }
+      .self-grade {
+        margin: 0 0 14px;
+      }
+      .self-grade .section-label {
+        margin-bottom: 10px;
+      }
+      .grade-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .grade-btn {
+        min-width: 0;
+        padding: 12px 4px 10px;
+        border: 1px solid #e4ebf3;
+        border-radius: 15px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 5px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+      }
+      .grade-symbol {
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        font-size: 20px;
+        font-weight: 900;
+      }
+      .grade-btn b {
+        font-size: 10px;
+        line-height: 1.3;
+      }
+      .grade-btn small {
+        font-size: 9px;
+        color: var(--muted);
+        line-height: 1.35;
+      }
+      .grade-btn[data-grade="O"] .grade-symbol {
+        background: #e3f6ef;
+        color: #19a878;
+      }
+      .grade-btn[data-grade="△"] .grade-symbol {
+        background: #fff2df;
+        color: #ed9a36;
+      }
+      .grade-btn[data-grade="X"] .grade-symbol {
+        background: #fff0f1;
+        color: #e85a63;
+      }
+      .grade-btn.selected[data-grade="O"] {
+        background: #f0fbf6;
+        border-color: #63d6ab;
+      }
+      .grade-btn.selected[data-grade="△"] {
+        background: #fff9ef;
+        border-color: #facb86;
+      }
+      .grade-btn.selected[data-grade="X"] {
+        background: #fff5f5;
+        border-color: #f59aa0;
+      }
+      .timeout-note {
+        margin: 0 auto 12px;
+        color: #ca565e;
+        text-align: center;
+        font-size: 11px;
+        font-weight: 750;
+      }
+      .explain-note {
+        font-size: 10px;
+        color: var(--muted);
+        text-align: center;
+        line-height: 1.6;
+        margin: 12px 0 0;
+      }
+      .result-hero {
+        text-align: center;
+        padding: 12px 0 18px;
+      }
+      .result-hero .success-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 14px;
+        color: #21a77b;
+        background: #e2f7ee;
+        border: 1px solid #c4efdc;
+        font-size: 28px;
+        font-weight: 900;
+      }
+      .result-hero h1 {
+        margin: 0 0 7px;
+        font-size: 22px;
+        letter-spacing: -0.05em;
+      }
+      .result-hero p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.6;
+      }
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        border: 1px solid #e4eaf2;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 14px 6px;
+        margin: 0 0 17px;
+      }
+      .summary-stat {
+        text-align: center;
+        padding: 0 5px;
+        min-width: 0;
+      }
+      .summary-stat + .summary-stat {
+        border-left: 1px solid #e6ecf3;
+      }
+      .summary-stat .num {
+        font-size: 21px;
+        font-weight: 850;
+        display: block;
+        margin-bottom: 5px;
+      }
+      .summary-stat b {
+        display: block;
+        font-size: 10px;
+        margin-bottom: 4px;
+      }
+      .summary-stat small {
+        font-size: 9px;
+        color: var(--muted);
+      }
+      .summary-stat.good .num {
+        color: #18aa79;
+      }
+      .summary-stat.partial .num {
+        color: #ef9c38;
+      }
+      .summary-stat.retry .num {
+        color: #e75a63;
+      }
+      .list-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin: 0 0 10px;
+      }
+      .list-heading b {
+        font-size: 12px;
+      }
+      .list-heading span {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .result-list {
+        border: 1px solid #e1e8f1;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.8);
+        overflow: hidden;
+      }
+      .result-row {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 20px minmax(0, 1fr) 24px 12px;
+        align-items: center;
+        gap: 8px;
+        text-align: left;
+        background: transparent;
+        padding: 12px 11px;
+        border-bottom: 1px solid #edf1f6;
+        min-height: 52px;
+      }
+      .result-row:last-child {
+        border-bottom: 0;
+      }
+      .result-row:hover {
+        background: #f6f9fd;
+      }
+      .result-index {
+        color: #7d8ca1;
+        font-size: 10px;
+        font-weight: 750;
+        text-align: center;
+      }
+      .row-question {
+        min-width: 0;
+      }
+      .row-question b {
+        display: block;
+        font-size: 11px;
+        font-weight: 750;
+        line-height: 1.5;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+      .row-question small {
+        display: block;
+        color: var(--muted);
+        font-size: 9px;
+        margin-top: 3px;
+      }
+      .grade-mini {
+        font-size: 18px;
+        font-weight: 900;
+        text-align: center;
+      }
+      .grade-mini.O {
+        color: #17ab78;
+      }
+      .grade-mini.△ {
+        color: #e89930;
+      }
+      .grade-mini.X {
+        color: #e65b63;
+      }
+      .row-chevron {
+        color: #97a5b6;
+        font-size: 20px;
+      }
+      .result-actions {
+        display: grid;
+        gap: 9px;
+        margin-top: 17px;
+      }
+      .detail-title {
+        text-align: center;
+        margin: 7px 0 17px;
+      }
+      .detail-title h1 {
+        font-size: 19px;
+        line-height: 1.55;
+        letter-spacing: -0.05em;
+        margin: 0 0 9px;
+        overflow-wrap: anywhere;
+      }
+      .detail-title p {
+        font-size: 11px;
+        color: var(--muted);
+        margin: 0;
+      }
+      .settings-section {
+        margin-bottom: 13px;
+      }
+      .settings-section h3 {
+        font-size: 12px;
+        margin: 0 0 10px;
+        font-weight: 850;
+      }
+      .preference {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 0;
+        border-top: 1px solid #edf1f6;
+      }
+      .preference:first-of-type {
+        border-top: 0;
+        padding-top: 1px;
+      }
+      .preference .pref-copy {
+        min-width: 0;
+      }
+      .preference b {
+        display: block;
+        font-size: 12px;
+        margin: 0 0 4px;
+      }
+      .preference p {
+        font-size: 10px;
+        line-height: 1.5;
+        color: var(--muted);
+        margin: 0;
+      }
+      .toggle {
+        appearance: none;
+        position: relative;
+        width: 42px;
+        height: 25px;
+        border-radius: 99px;
+        background: #dce4ee;
+        transition: background 0.2s;
+        flex: 0 0 auto;
+        cursor: pointer;
+      }
+      .toggle:before {
+        content: "";
+        position: absolute;
+        width: 19px;
+        height: 19px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 2px 5px #7890aa50;
+        left: 3px;
+        top: 3px;
+        transition: transform 0.2s;
+      }
+      .toggle:checked {
+        background: #2e8df3;
+      }
+      .toggle:checked:before {
+        transform: translateX(17px);
+      }
+      .font-choices {
+        display: flex;
+        gap: 6px;
+      }
+      .font-choices button {
+        padding: 8px 10px;
+        border-radius: 10px;
+        background: #eef3f9;
+        color: #718096;
+        font-size: 10px;
+        font-weight: 750;
+      }
+      .font-choices button.active {
+        color: #2d7dc8;
+        background: #e6f2ff;
+        border: 1px solid #cce4ff;
+      }
+      .inline-info {
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin: 13px 1px 0;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: calc(22px + env(safe-area-inset-bottom));
+        transform: translate(-50%, 18px);
+        opacity: 0;
+        pointer-events: none;
+        background: #202c3b;
+        color: #fff;
+        padding: 11px 15px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        box-shadow: 0 10px 30px #1f2f4450;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        z-index: 20;
+        max-width: calc(100vw - 28px);
+        text-align: center;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (min-width: 650px) {
+        .app-shell {
+          margin: 26px auto;
+          min-height: min(900px, calc(100dvh - 52px));
+        }
+        .app-content {
+          padding-left: 27px;
+          padding-right: 27px;
+        }
+      }
+      @media (max-width: 520px) {
+        body {
+          background: #edf2f8;
+        }
+        .app-shell {
+          width: 100%;
+          min-height: 100dvh;
+          margin: 0;
+          border: 0;
+          border-radius: 0;
+          box-shadow: none;
+          padding-bottom: max(15px, env(safe-area-inset-bottom));
+        }
+        .app-content {
+          padding: max(16px, env(safe-area-inset-top)) 19px 25px;
+        }
+        .hero {
+          padding-top: 31px;
+        }
+        .hero h1 {
+          font-size: 24px;
+        }
+        .mode-card {
+          min-height: 80px;
+        }
+        .prompt-wrap h1 {
+          font-size: 20px;
+        }
+        .answer-text {
+          font-size: var(--answer-font);
+        }
+        .topbar {
+          margin-bottom: 14px;
+        }
+        .quiz-progress {
+          margin-bottom: 18px;
+        }
+      }
+      @media (max-width: 360px) {
+        .app-content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+        .hero {
+          padding-top: 23px;
+        }
+        .hero h1 {
+          font-size: 22px;
+        }
+        .mode-card {
+          padding: 12px;
+          gap: 10px;
+        }
+        .mode-icon {
+          width: 41px;
+          height: 41px;
+        }
+        .mode-copy b {
+          font-size: 14px;
+        }
+        .prompt-wrap h1 {
+          font-size: 18px;
+        }
+        .grade-grid {
+          gap: 5px;
+        }
+        .grade-btn {
+          padding-left: 2px;
+          padding-right: 2px;
+        }
+        .grade-btn b {
+          font-size: 9px;
+        }
+        .summary-stat b {
+          font-size: 9px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <main id="app" class="app-content" aria-live="polite"></main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script id="question-data" type="application/json">
+      [
+        {
+          "id": "6.1",
+          "kind": "old",
+          "title": "구원열차 기관사 조치",
+          "prompt": "6.1 구원열차 기관사 조치",
+          "answer": "1) 관제사에게 운전 명령과 고장 열차 정차 지점, 운전 방식 확인\n2) 차장에게 안내 방송, 최근 역에 승객 하차 의뢰\n3) 전령자 전호로 고장 열차 3m 앞에 정차, 연결기 공기 마개(4개) 제거\n4) 단속단으로 고장 열차에 연결, 살짝 후진하여 연결 상태 확인\n5) RSOS 해당 위치로 전환, ATCCOS/ATSCOS 차단\n6) 관제 보고 후 25km/h이하 속도로 운전",
+          "hint": "관차전단R관"
+        },
+        {
+          "id": "6.2",
+          "kind": "old",
+          "title": "고장 열차 기관사 조치",
+          "prompt": "6.2 고장 열차 기관사 조치",
+          "answer": "1) MC 키 및 제동 핸들 취거, 후부 운전실로 이동 후 RSOS 해당 위치로 전환, 배전반 DILPN 차단\n2) 연결기 공기 마개(4개) 제거, 12JP선 준비, 필요시 103인통선 준비\n3) 구원열차 연결하고 전부 운전실 ATSCOS 차단",
+          "hint": "M연구"
+        },
+        {
+          "id": "6.3",
+          "kind": "old",
+          "title": "고장ㆍ구원 열차 공통 사항",
+          "prompt": "6.3 고장ㆍ구원 열차 공통 사항",
+          "answer": "1) 제동 핸들 취거, 12JP선 연결, MR Cock 개방, 제동 핸들 7단 유지\n2) 버저 및 통화 시험과 제동 시험 후 운전취급 등에 관한 협의 (축전지 전압 저하 시 103 인통선 연결)",
+          "hint": "제버"
+        },
+        {
+          "id": "6.4",
+          "kind": "old",
+          "title": "12 JP선(점퍼선) 종류",
+          "prompt": "6.4 12 JP선(점퍼선) 종류",
+          "answer": "10 : 회생제동 작용선 / 27·28·29 : 상용제동선 / 31·32 : 비상제동 LOOP선 /\n33 : 보안제동선 / 100 : 접지선 / 145 : 출입문등 점등선 / 164 : 승무원 연락용 버저선\n175·176 : 차내 방송선\n[참고] 구원 운전 관련\n1. 12JP 연결하면 RSOS 위치와 관계없이 접속되는 선은 145, 175, 176선\n2. 평가 위원이 “○○역에 고장 열차가 정차하고 있으니 구원 운전하세요. ”하면, 구원 열차 기관사의 조치 사항 답변\n3. 구원 운전 스위치(RSOS)는 마주 보는 운전실의 RSOS를 해당 차량 위치로 절환\n▶정상 ▶4호선 과천선 ▶과천선 → 1호선 ▶1호선 → 과천선 ▶DL 위치\n4. 구원 운전 시 구원열차 운전 속도 25km/h 이하 (같은 차종으로 전부 운전실에서 구원 운전 시는 45km/h 이하 주의 운전)\n5. 회송 운전 시 정거장의 승강장 통과 속도는 서울교통공사 구간은 45km/h, 한국철도 공사 구간은 60km/h 이하(정차 열차 제외)",
+          "hint": "회보차"
+        },
+        {
+          "id": "6.5",
+          "kind": "old",
+          "title": "완전 부동 취급 시기",
+          "prompt": "6.5 완전 부동 취급 시기",
+          "answer": "1) Pan 파손 및 집전장치 고장 시        2) 피뢰기(ACArr, DCArr) 작동 시\n3) 주 퓨즈 용손 시                 4) EGS 용착 시\n5) 디젤기관차(DL) 구원받을 때           6) 기타 필요시 [참고] 기타 필요 시\n1. MCB 투입 및 MCB 차단 불능 시\n2. 전차선이 없는 구간에 잘못 진입 시\n3. L1차단 복귀 불능 시 등",
+          "hint": "P주디M전L"
+        },
+        {
+          "id": "6.6",
+          "kind": "old",
+          "title": "완전 부동 취급 방법",
+          "prompt": "6.6 완전 부동 취급 방법",
+          "answer": "1) 관제사 및 차장 통보 후 전 편성 MCB 차단 및 Pan 하강 조치\n2) 해당 M'차 ADAN·ADDN을 먼저 차단하고, PanVN을 차단\n3) 이후 연장 급전, Pan 상승 및 MCB 투입",
+          "hint": "관해이"
+        },
+        {
+          "id": "6.7",
+          "kind": "old",
+          "title": "전 편성 Pan 내리지 않고 완전 부동 취급 방법 (1개 Unit 완전 부동 취급법)",
+          "prompt": "6.7 전 편성 Pan 내리지 않고 완전 부동 취급 방법 (1개 Unit 완전 부동 취급법)",
+          "answer": "• 고장 M'차 ADAN·ADDN을 먼저 차단 후 PanVN 차단하고 해당 Unit 연장 급전 [참고] 완전 부동 취급하고 연장 급전 후 현상\n- 해당 Unit Pan 하강으로 MCB 양 소등되고 동력 운전 및 제동 시 POWER등 점등 불능\n- 연장 급전으로 전체 객실등과 냉난방이 반감되나, 고장 Unit CM은 정상 구동",
+          "hint": "고해연"
+        },
+        {
+          "id": "6.8",
+          "kind": "old",
+          "title": "연장 급전 시기",
+          "prompt": "6.8 연장 급전 시기",
+          "answer": "1) SIV 고장 시\n2) M'차 주 변환기(C/I) 고장 시\n3) 완전 부동 취급 시",
+          "hint": "SM완"
+        },
+        {
+          "id": "6.9",
+          "kind": "old",
+          "title": "VCOS 취급 시기와 방법",
+          "prompt": "6.9 VCOS 취급 시기와 방법",
+          "answer": "1) 시기는 C/I 고장으로 CIFR 여자 시, 송풍기 고장으로 BMFR 여자 시, 주 변압기 고장으로 MTAR 여자 되어 복귀 불능 시\n2) 방법은 동력 핸들 OFF 위치에서 MCBOS-VCOS-RS-3초 후 MCBCS 취급 [참고] VCOS취급 후 현상 및 조치\n1) VCOS 취급 후 CIFR, BMFR 여자 시는 Fault등 소등, VCO등 점등, MTAR 여자 시는 Fault 등 소등, UCO등 점등\n2) CIFR, BMFR 고장 차량은 L1, L2, L3 투입 불능 및 AK, K 투입 불능 고장 없이 정지한 차량은 MCB 재투입되나 MTAR은 MCB 투입 불능\n3) M'차가 개방된 경우 또는 MTAR 여자 시는 연장 급전 필요",
+          "hint": "시은VCM"
+        },
+        {
+          "id": "6.10",
+          "kind": "old",
+          "title": "연장 급전 방법",
+          "prompt": "6.10 연장 급전 방법",
+          "answer": "1) SIVFR 여자 시는 운전실에서 ESPS 취급하며, 기타는 수동으로 IVCN 차단하여 연장 급 전 후 MCBOS - RS - 3초 후 MCBCS 취급하여 모니터에 ‘송풍기 정지’ 현시 복귀\n2) 연장 급전 시 T1차는 상황에 따라 ESS를 1 또는 2 위치로 전환\n※ T1차 연장 급전 시 ESS 1위치에서는 T1차 Unit에 0호대 SIV가 전력을 공급(6칸)하고, ESS 2위치에서는 9호대 SIV가 전력을 공급(7칸)\n[참고] 연장 급전 관련 출제 가능한 문제\n1. 연장 급전이 된 것을 확인하는 방법은 모니터의 ‘차량 상태’ 화면 또는 객실등 반감 상 태로 확인\n2. IVCN 차단 시 모니터에 나타나는 현상은 모니터에 ‘SIV 통신 이상’ 현시\n3. 고장 차(TC, T1) IVCN을 차단하는 이유는 연장 급전 회로를 구성하기 위함.",
+          "hint": "S연"
+        },
+        {
+          "id": "6.11",
+          "kind": "old",
+          "title": "전체 Pan 상승 불능 시 현상과 조치",
+          "prompt": "6.11 전체 Pan 상승 불능 시 현상과 조치",
+          "answer": "▶ 현상 : AC·DC등 소등, 모니터에 Pan 하강으로 표시\n▶ 조치\n1) 전차선 급전 상태 확인(단전 시 Pan이 올라가 있어도 모니터에 Pan 하강으로 표시)\n2) 축전지 전압 74V 이상 확인\n3) ACM 공기압력 확인(ACMCS 취급, ACMLP 소등 확인)\n4) MCB 차단 여부 확인\n5) 전부 TC차 MCN, HCRN 차단 여부 확인\n6) 전·후 TC차 EPanDS, EGCS 작동 여부 확인\n7) 후부 TC차에서 취급\n[참고]\nPan 상승 시간은 12 ± 2초, Pan 하강시간은 5±1초",
+          "hint": "A전축AM전전후"
+        },
+        {
+          "id": "6.12",
+          "kind": "old",
+          "title": "1개 Unit Pan 상승 불능 시 현상 및 조치",
+          "prompt": "6.12 1개 Unit Pan 상승 불능 시 현상 및 조치",
+          "answer": "▶ 현상 : 모니터에 해당 차 Pan 하강 표시되고 MCB 양 소등\n▶ 조치\n1) 해당 M'차 PanVN과 의자 밑 Pan 공기관 Cock 4개 확인\n2) DC 구간은 해당 차 MCBN2 차단 여부 확인\n[참고]\n1. PanV 이전 Cock 차단 시는 MCB 양 소등\n2. PanV와 PanPS 이후 Cock 차단 시는 정상적으로 MCB 투입",
+          "hint": "모해D"
+        },
+        {
+          "id": "6.13",
+          "kind": "old",
+          "title": "전체 MCB 투입 불능 시 현상과 조치",
+          "prompt": "6.13 전체 MCB 투입 불능 시 현상과 조치",
+          "answer": "▶ 현상 : MCB OFF등 점등, SIV등 소등\n▶ 조치\n1) Pan 상승 여부 확인\n2) ADS 정위치 확인\n3) MCBOS-CS 취급하여 MCBHR 작동 음 확인\n4) 전부 TC차 MCN, HCRN 차단 여부 확인\n5) 전·후 TC차 EPanDS 및 TEST 스위치 작동 여부 확인\n6) 주 공기압력 또는 ACM 공기압력 확인(필요시 ACM 구동)\n7) 후부 TC차에서 취급 [참고]\n1. MCB(Main Circuit Braker)란? 교류 구간에서 특고압 회로 이상 발생 시 회로를 신속히 차단하여 보호하고, 평상시에는 특고압 회로의 개폐 작용을 한다. 직류 구간에서는 특고압 회로의 개폐 작용만 한다.\n2. MCB 사고 차단의 경우\n- 교류 모진으로 ArrOCR 여자 시\n- 주 변압기 1차 측 과전류로 ACOCR 여자 시\n- 주 변환 장치의 중(重)고장으로 MCBOR 무여자(소자) 시 (MT 2차측 과부하 및 접지, 전력 변환 소자 소손)",
+          "hint": "MPAM전전주후MM교주주"
+        },
+        {
+          "id": "6.14",
+          "kind": "old",
+          "title": "1개 Unit MCB 투입 불능 시 현상 및 조치",
+          "prompt": "6.14 1개 Unit MCB 투입 불능 시 현상 및 조치",
+          "answer": "▶ 현상 : MCB 양 소등, 모니터에 해당 차량 MCB차단\n▶ 조치\n1) ADAN·ADDN, MCBN1·MCBN2, MTOMN, MTBMN 차단 여부 확인\n2) M, M'차 CIN 차단 여부 확인\n3) M'차 의자 밑 PanV 이전 Cock 확인\n4) M'차 차체 하부 MCB 공기관 Cock 확인",
+          "hint": "MAMMM"
+        },
+        {
+          "id": "6.15",
+          "kind": "old",
+          "title": "동력 운전 불능 시 조치",
+          "prompt": "6.15 동력 운전 불능 시 조치",
+          "answer": "1) 급전(AC. DC등) 및 MCB 투입 상태 확인\n2) 전·후진 핸들 전·후진 위치 확인\n3) Door등 점등 확인, 소등 시 후부 운전실 DILPN 차단 여부 확인\n4) 주차제동 스위치 및 주 공기압력 확인(6.0~7.0Kg/㎠ 이상)\n5) ATC/ATS 관련 차단기 확인(ATCN, ATCPSN, ATSN1)\n6) 제동 핸들 완해 위치에서 2~3초간 동력 운전 취급(ZVR 불량)\n7) 관제사 승인 후 ATCCOS/ATSCOS 차단하고 동력 운전 취급\n8) 그래도 동력 운전 불능 시에는 후부 운전실에서 취급\n[참고] 동력 운전 관련 출제 가능한 문제\n1. 1칸 동력 운전 불능 시는 M차 또는 M'차 배전반의 CN1, CN3 차단 확인\n※ CN1 : 전·후진 제어 회로 차단기, CN3: 동력 제어 회로 차단기, CN2: 회생제동 제어 회로 차단기\n2. POWER등, MCB ON등, MCB OFF등 모두 소등 시 후부 운전실 PLpN 차단 확인",
+          "hint": "급전D주A제관그"
+        },
+        {
+          "id": "6.16",
+          "kind": "old",
+          "title": "비상제동이 작동되는 경우",
+          "prompt": "6.16 비상제동이 작동되는 경우",
+          "answer": "1) 제동 핸들로 비상제동 체결 시\n2) 전·후부 운전실 비상제동 스위치(EBS1·EBS2) 작동 시\n3) ATC/ATS에 의해 비상제동 체결 시\n4) DSD 작동 시\n5) BVN1·BVN2, HCRN, ATCN, ATCPSN, ATSN1 회로 차단기 차단 시\n6) 주 공기압력 저하 시(MRPS 6.0~7.0kg/㎠)\n7) RSOS 정상 위치가 아닐 때\n8) 열차 분리 시",
+          "hint": "제전ADB주R열"
+        },
+        {
+          "id": "6.17",
+          "kind": "old",
+          "title": "비상제동 체결과 관련 있는 회로 차단기 또는 스위치",
+          "prompt": "6.17 비상제동 체결과 관련 있는 회로 차단기 또는 스위치",
+          "answer": "1) 회로 차단기: BVN1·BVN2, HCRN, ATCN, ATCPSN, ATSN1\n2) 스위치: 운전실 비상제동 스위치(EBS1·EBS2), 구원 운전 스위치(RSOS), 주 공기압력 스 위치(MRPS)",
+          "hint": "회스"
+        },
+        {
+          "id": "6.18",
+          "kind": "old",
+          "title": "BVN1, BVN2 회로 차단기 복귀 불능 시 조치",
+          "prompt": "6.18 BVN1, BVN2 회로 차단기 복귀 불능 시 조치",
+          "answer": "• 관제사 지시로 후부 운전실에서 추진 운전\n[참고] BVN1 회로 차단기 복귀 불능 시\nEBCOS 취급하면 비상제동은 완해되지만 BR 여자 불능으로 동력 운전이 불가능하고,\nZVR 무여자로 정차 시 출입문 취급 불능이며, 제동 제어 전원 차단으로 상용제동 불능임.",
+          "hint": "관"
+        },
+        {
+          "id": "6.19",
+          "kind": "old",
+          "title": "비상제동 완해 불능 시 현상 및 조치",
+          "prompt": "6.19 비상제동 완해 불능 시 현상 및 조치",
+          "answer": "▶ 현상 : 모니터에 ‘비상제동 동작’ 현시되고 동력 운전 불능\n▶ 조치\n1) 비상제동 작동 원인(‘비상제동이 작동되는 경우’ 참고)을 확인하여 조치하고,\n2) 조치 불능 시, 관제사에게 보고하고 EBCOS 투입하여 비상제동을 개방하고 차장에게 통\n보 후 운전\n[참고 1] EBCOS취급으로 비상제동이 완해되는 경우\n① DSD불량으로 비상제동 완해 불능 시\n② 전, 후부 운전실 RSOS정상위치 아닐 때\n③ MR압력 6.0kg/㎠이하 시\n④ 전, 후부 운전실 EBS1,2복귀 불능 시\n- EBCOS취급 시, 보안장치(ATS, ATC, DSD 등) 및 열차분리 시 비상제동이 체결되지 않으 니 주의할 것",
+          "hint": "모비불보[D전M전E"
+        },
+        {
+          "id": "6.20",
+          "kind": "old",
+          "title": "주 공기압력 상승 불능(주 공기압력 저하) 시 현상 및 조치",
+          "prompt": "6.20 주 공기압력 상승 불능(주 공기압력 저하) 시 현상 및 조치",
+          "answer": "▶ 현상 : 비상제동 체결되고 동력 운전 불능\n▶ 조치\n1) 공기 누설 여부 확인과 모니터(출고 화면)로 SIV와 CM 구동 상태를 확인하며, 공기 누 설 시는 누설되는 공기관 Cock를 차단하거나 차 사이의 MR Cock를 차단\n2) CM 구동 불능 시는 해당 차 CMCN, CMGN을 확인하고, 구동 불능 시 Pan 하강, 제동 핸들 취거, 10초 후 재기동 취급하며, 복구 불능 시 구원 요구\n[참고] 차량 간 주 공기 누설 시 조치\n1. 누설 개소 전후 차 사이의 MR Cock 차단(각 2개씩 : 4개)\n2. CM이 1개 있는 곳의 CMCN을 OFF 하여 동기 구동 회로 차단\n3. 해당 차량 출입문 쇄정 후 필요시 DIRS 취급\n4. 차량 교환 역까지 운행",
+          "hint": "비공C"
+        },
+        {
+          "id": "6.21",
+          "kind": "old",
+          "title": "주 공기압력 9.7kg/㎠(9kg/㎠) 이상 상승 시 현상 및 조치",
+          "prompt": "6.21 주 공기압력 9.7kg/㎠(9kg/㎠) 이상 상승 시 현상 및 조치",
+          "answer": "▶ 현상 : CM 계속 구동으로 주 공기압력이 9.7kg/㎠ 이상 올라가고 안전변 토출\n▶ 조치\n1) 모니터로 CM 구동 상태를 확인\n2) CM 계속 구동되는 차가 있으면 해당 차 CMCN, CMGN을 차단하여 CM을 정지\n3) 전체 CM이 구동되면 순차적으로 CMGN을 차단하여 CM 구동이 멈추면 해당 차 CMGN 을 차단하고 운전",
+          "hint": "C모C전"
+        },
+        {
+          "id": "6.22",
+          "kind": "old",
+          "title": "TC차 전면 2지변 이후 주 공기압력 누설 시 현상 및 조치",
+          "prompt": "6.22 TC차 전면 2지변 이후 주 공기압력 누설 시 현상 및 조치",
+          "answer": "▶ 현상 : 비상제동 체결되고 동력 운전 불능\n▶ 조치\n1) 전부 TC차와 인접 차 사이의 주 공기관 Cock 차단\n2) 전부 TC차의 주차제동 강제 완해\n3) 승객을 다른 차량으로 이동 후 출입문 쇄정\n4) CMCN, CMGN을 차단, CM 정지\n5) 후부 운전실에서 DIRS 및 EBCOS 취급하고 추진 운전으로 회송 조치\n[참고] PBPS 또는 MRPS 작동 압력 : 6.0~7.0kg/㎠",
+          "hint": "비전전승C후"
+        },
+        {
+          "id": "6.23",
+          "kind": "old",
+          "title": "주차제동 수동 완해 방법",
+          "prompt": "6.23 주차제동 수동 완해 방법",
+          "answer": "1) 주차제동 스위치, 주차 위치\n2) TC차 BC 전체 완해 Cock 차단\n3) 전부 대차 2, 3위 주차제동 완해 고리를 당겨 주차제동을 완해\n4) BC 전체 완해 Cock와 주차 제동 스위치 복귀\n[참고]\nBC 전체 완해 Cock를 차단하는 이유는 공기제동을 완해한 상태에서 주차제동 완해가 가\n능하고, 주차제동 완해 여부를 확인할 수 있기 때문",
+          "hint": "주T전B"
+        },
+        {
+          "id": "6.24",
+          "kind": "old",
+          "title": "제동 불완해 발생 시 조치",
+          "prompt": "6.24 제동 불완해 발생 시 조치",
+          "answer": "1) CpRS 취급하고 모니터로 해당 차량 확인 완해 확인 후 CpRS 복귀하고 운전\n2) CpRS 취급으로 완해 불능 시\n① 즉시 정차하여 BC 전체 완해 Cock차단\n② 제동축 비율에 따라 제한속도 이하로 운전(제동축 비율 80% 이상 100% 미만 시 110km/h 이하)\n[참고] 제동 불(不)완해 관련\n1. BC 전체 완해 Cock를 차단해도 완해 불능이면, 대차 Cock를 차단하여 완해. 대차 Cock를 차단해도 완해 불능 시는 관제사에게 차량 상태를 통보하고 관제사 지시 를 받고 조치\n2. 1개 차량에 BC 관련 Cock는 BC 전체 완해 Cock 1개, 전부와 후부 대차 Cock 각 1개, 총 3개의 Cock가 있고, BC 전체 완해 Cock는 BOU함 뒤에 설치되어 있음.\n3. 제동 불완해 시 CpRS 취급 차량의 제동 취급 상태. 상용 공기제동과 비상제동은 작용 불능이고, 보안제동은 가능\n4. 제동축 비율이란 연결 차량의 차축 수에 대한 제동축(제동 작용하는 차축) 수의 비율 이고, 제동축 비율에 따른 적용 속도는 다음과 같음. (제동축 비율)\n- 100% 미만 80% 이상 110km/h\n- 80% 미만 60% 이상    90km/h\n- 60% 미만 40% 이상 70km/h\n- 40% 미만이 되었을 때 최근 정거장까지 25km/h 이하 운행 후 조치",
+          "hint": "CC즉제"
+        },
+        {
+          "id": "6.25",
+          "kind": "old",
+          "title": "보안제동 완해 불능 시 조치",
+          "prompt": "6.25 보안제동 완해 불능 시 조치",
+          "answer": "1) 전·후부 운전실 보안제동 스위치 작동 여부 확인\n2) 완해 불능 시 전·후부 운전실 ScBN 차단\n3) 그래도 완해 불능 시, 각 차 BOU함 뒤 SBU Cock를 차단\n[참고] 보안제동이 체결되지 않는 경우의 조치\n- 운전실 내 ScBN 차단 여부 확인\n- 1량인 경우, 해당 차량 배전반 내 ScBN1 확인",
+          "hint": "전완그"
+        },
+        {
+          "id": "6.26",
+          "kind": "old",
+          "title": "Fault등 및 차측등(백색)이 점등되는 경우",
+          "prompt": "6.26 Fault등 및 차측등(백색)이 점등되는 경우",
+          "answer": "1) CM 고장으로 EOCR 여자 시\n2) SIV 고장으로 SIVFR 여자 시\n3) 주 변환 장치 고장으로 CIFR 여자 시\n4) 직류 구간 L1차단으로 L1FR 여자 시\n5) 교류모진으로 ArrOCR 여자 시\n6) 주 변압기 1차 측 과전류에 의한 ACOCR 여자 시\n7) 주 변압기 계통 고장으로 인한 MTAR 여자 시",
+          "hint": "CS주직교주주"
+        },
+        {
+          "id": "6.27",
+          "kind": "old",
+          "title": "SIV 고장시, 원인과 고장 시 현상 및 조치",
+          "prompt": "6.27 SIV 고장시, 원인과 고장 시 현상 및 조치",
+          "answer": "1) 원인\n① SIV 중(重)고장으로 SIVFR 여자 시\n② TC차 및 T1차의 IVCN 또는 M'`차 AMCN 차단 시\n③ 교류 구간에서 주 변압기 고장, C/I 고장으로 인해 SIV에 전원 공급 불능 시\n2) 현상\n① 교류 구간에서 송풍기 정지로 C/I 정지\n② SIVFR 여자 시 Fault등, 해당 차 차측등(백색) 점등\n3) 조치\n① 차측등 및 모니터로 고장 차 확인 후 MCBOS-RS-3초 후-MCBCS 취급\n② 복귀 불능 시 Pan 하강, 제동 핸들 취거 10초 후 재 기동\n③ 계속 복귀 불능 시 IVCN 차단하고 연장 급전 후 MCBOS-RS-3초 후-MCBCS 취급\n[참고] SIV 전원 공급처\n- AC440V : CM, 냉난방, CIBM, FLBM, MTBM, MTOM\n- AC220V : 운전실등(AC), 객실등(AC), 행선등, 열차번호등\n- AC100V : 전조등(AC), 제상기(除霜機), Levelling 밸브·각종 장치 히터\n- DC100V : 축전지 전원(충전), 저압·제어 전원, 객실등(DC)·방공등, 전조등(DC)",
+          "hint": "ST교교S차복계"
+        },
+        {
+          "id": "6.28",
+          "kind": "old",
+          "title": "정지 위치 지나 정차 시 조치",
+          "prompt": "6.28 정지 위치 지나 정차 시 조치",
+          "answer": "1) 정지 위치를 지나 승강장내 정차한 경우, 차장과 협의하여 정지위치를 조정하고 관제사 에게 즉시 보고\n2) 승강장을 완전히 벗어난 경우에는 관제사의 퇴행 승인을 받아 차장과 협의하여 퇴행\n[참고] 폐색구간 점유의 기준\nATS 구간은 출발신호기, ATC 구간은 출발 경계표지를 기준으로 한다.",
+          "hint": "정승"
+        },
+        {
+          "id": "6.29",
+          "kind": "old",
+          "title": "ATS 구간(하선 금정역. 상선 산본역) 출발신호 정지 시 조치",
+          "prompt": "6.29 ATS 구간(하선 금정역. 상선 산본역) 출발신호 정지 시 조치",
+          "answer": "1) 차장에게 안내 방송 요청, 출발신호 정지 상태를 관제사에게 통보하여 운전 명령 번호를 수신\n2) 제동 핸들 4단 이상에서 ASOS 취급(수신호 통고 시 수신호 확인), 선로 전환기를 확인 하면서 열차 후부가 맨 바깥쪽 선로 전환기 통과 시까지 25km/h 이하로 운전\n3) 맨 바깥쪽 선로 전환기부터 다음 신호기 위치까지 열차 없음이 확인될 때는 45km/h 이 하, 그 밖에는 25km/h 이하로 운전\n[참고] 산본역 상선, 금정역 하선 운전 취급\n열차의 후부가 맨 바깥쪽 선로전환기를 통과 후\n1. 상선 산본역을 발차 시는 45km/h 이하에서 제동감도 시험(제동체결 속도에서 5km/h 이상 감속)\n2. 하선은 금정역 발차 시는 제한속도 40km/h 이하로 운전",
+          "hint": "차제맨"
+        },
+        {
+          "id": "6.30",
+          "kind": "old",
+          "title": "장시간 단전 시 조치",
+          "prompt": "6.30 장시간 단전 시 조치",
+          "answer": "1) 관제사에게 단전 여부 및 급전 시기 확인하고 차장에게 안내 방송 요청\n2) 구름 방지 조치를 하고, TC차 배전반 내 EOCN ON 취급(EON, EORN ON 확인) 후\n3) Pan 하강 및 제동 핸들 취거, 축전지 전압 수시로 확인(74V 이상)\n4) 필요시 승객 편의를 위해 각 차량 출입문 1개씩 개방하고 급전 시까지 대기\n[참고] 장시간 단전 또는 순간 단전 관련 사항\n1. Pan 하강, 제동 핸들 취거하고 EOCN ON(EON. EORN. ON) 취급 후 현상\n① 객실 방공등 4개 점등(실제 차는 6개 점등)\n② 열차 무선전화 가능(WTS ON 확인)\n③ 실내 방송 및 차내 전화 가능(연락 버저 사용 불능)\n2. 단전 후 급전 시 MCBOS-MCBCS 취급하는 이유\n- 7, 8선을 끊어 MCBR2 자기 여자회로를 차단하기 위해 취급\n3. 운행 중 단전 시 기관사의 조치\n① 관제사에게 단전 여부 및 급전 시기 확인, 차장에게 안내 방송 요청\n② 무동력으로 최근 정거장까지 운행하면서, 급전이 되면 MCBOS-MCBCS 취급하여 MCB 투입\n③ 만약 회생제동 중 단전이 되었으면, 급전 후 MCBOS-RS-3초 후-MCBCS 취급하여 C/I 인버터 정지를 복귀",
+          "hint": "관구P필"
+        },
+        {
+          "id": "6.31",
+          "kind": "old",
+          "title": "ASOS(특수 스위치) 취급 시기",
+          "prompt": "6.31 ASOS(특수 스위치) 취급 시기",
+          "answer": "1) 수신호 또는 유도신호기에 따라 운전할 경우\n2) 입환 신호기 또는 구내 폐색신호기의 정지신호 현시 구간을 넘어서 운전할 경우\n3) 정지신호 R0 자동폐색신호기를 넘어서 운전하거나, 넘어서 정지한 경우\n4) 지상 장치가 고장일 경우\n5) 상치신호기 지상자가 설치된 입환 표지(입환신호기 포함)와 입환신호기의 개통 구간을 운전할 경우",
+          "hint": "수입정지상"
+        },
+        {
+          "id": "6.32",
+          "kind": "old",
+          "title": "상선 범계, 인덕원, 대공원역 진출 시 진로 개통 표시기 불량 시 조치",
+          "prompt": "6.32 상선 범계, 인덕원, 대공원역 진출 시 진로 개통 표시기 불량 시 조치",
+          "answer": "• 차내 신호가 진행을 현시해도 진로 개통 표시기를 지나 진입할 수 없고, 진행 수신호 생 략 승인에 의해 운전",
+          "hint": "차"
+        },
+        {
+          "id": "6.33",
+          "kind": "old",
+          "title": "직류 전환(AC→DC) 시 MCB 양 소등 발생 시 조치",
+          "prompt": "6.33 직류 전환(AC→DC) 시 MCB 양 소등 발생 시 조치",
+          "answer": "1) 즉시 EPanDS 취급, 절연 구간을 40km/h 이하로 무동력 운전\n2) 최근 역 정차, 모니터로 MCB 차단 불능 차량 확인, EPanDS 복귀하고 Pan 상승\n3) Pan 상승 불능 차의 MCBN1이 차단되어 있으면 복귀시키고, 정상이면 해당 차 MCB 기계적 고착으로 판단, 완전 부동 취급 후 연장 급전하고 운전\n※ 절연 구간을 40km/h 이하로 통과하는 이유 : MCB 차단 불능 차는 교류 구간에서 Pan 하강 불능이며 절연 구간에 진입하여 Pan이 하강하므로, 하강 여유 시간을 두어 직류 모진을 방지하기 위해 서행",
+          "hint": "즉최P"
+        },
+        {
+          "id": "6.34",
+          "kind": "old",
+          "title": "교류 전환(DC→AC) 시 MCB 양 소등 발생 시 조치",
+          "prompt": "6.34 교류 전환(DC→AC) 시 MCB 양 소등 발생 시 조치",
+          "answer": "1) 즉시 EPanDS 취급\n2) 최근 역 정차, 해당 차 완전 부동 취급 후 연장 급전하고 운전\n※ 하선 절연 구간 통과 속도제한은 따로 없고(60km/h 이하), MCBN1 차단과 관계없이 MCB 기계적 고착에 의한 양 소등만 발생",
+          "hint": "즉최"
+        },
+        {
+          "id": "6.35",
+          "kind": "old",
+          "title": "교류 모진 시 현상 및 조치",
+          "prompt": "6.35 교류 모진 시 현상 및 조치",
+          "answer": "▶ 현상 DCArr 방전으로 전차선 단전되어 AC등 소등, 모니터에 ‘AC 과전류(1차)’ 현시되고, MCB OFF등, Fault등과 차측등(백색)이 점등\n▶ 조치\n1) 즉시 EPanDS 취급, 최근 정거장 도착 후 EPanDS 복귀\n2) 해당 차 완전 부동 취급 후 연장 급전\n3) MCBOS - RS - 3초 후 - MCBCS 취급, FauIt등 및 차측등(백색)을 소등하고 운전\n※ AC 25,000V가 DC 1,500V 장치에 들어오면(교류 모진) DCArr이 작동하여 전차선이 단전되고, ArrOCR 작동으로 모니터에 ‘AC 과전류(1차)’ 현시, MCB가 차단됨.\n[참고] 교류 모진(DCArr 방전) 확인 방법\n모니터 또는 Fault등, 차측등(백색)이 점등되나, 승객 제보(굉음) 등으로 확인",
+          "hint": "D즉해M"
+        },
+        {
+          "id": "6.36",
+          "kind": "old",
+          "title": "교·직류 전환 시 MCB ON등 계속 점등 시 조치",
+          "prompt": "6.36 교·직류 전환 시 MCB ON등 계속 점등 시 조치",
+          "answer": "1) 2선이 단선되었거나 HCR2(b) 접점 불량 시, 후부 운전실 MCBHR 트립 코일(trip coil) 여자 불능으로 양쪽 운전실에서 7선 또는 8선이 가압되어 ADS를 전환해도 MCB 차단 불능\n2) 즉시 EPanDS 취급하고 직류 전환 시에는 절연 구간을 40km/h 이하로 운전하고, 교류 전환 시에는 그대로 운전하여 최근 정거장 도착, EpanDS 복귀하고 Pan 상승, MCB 투 입 후 전도 운전\n3) 종착역 도착, 운전실 교환 후에는 후부 운전실 MCN 차단하고 전도 운전 후 입고 조치\n[참고] 교-직 전환 시 조치 관련\n1. 절연 구간에서 MCB 양 소등되는 경우\n- 열차 편성 중 MCB 기계적 고착 또는 MCBN1 차단(직류 전환 시에 한함) 차량이 있 으면 MCB 양 소등됨.\n2. 직류 모진이란, 직류의 대(大)전류가 주 변압기 1차 측으로 들어와 주 퓨즈가 용손되는 것.\n3. 직류 모진 시 작동 기기와 현상 및 조치\n- 주 퓨즈(MFs) 용손으로 60초 후 MCB 차단되므로, 최근 정거장에 도착하여 해당 차 완전 부동 취급 후 연장 급전하고 운전\n4. 주 퓨즈 용손 시의 현상은 주 퓨즈의 빨간색 단추가 약 30mm 튀어나오고, MTOM 정 지로 60초 후 MTOFTR이 작동되어 MTAR 여자로 MCB가 차단 됨.",
+          "hint": "2즉종"
+        },
+        {
+          "id": "6.37",
+          "kind": "old",
+          "title": "EPanDS 고착 또는 복귀 불능 시 조치",
+          "prompt": "6.37 EPanDS 고착 또는 복귀 불능 시 조치",
+          "answer": "• 전부 운전실 PanDN 차단하고 관제사 지시로 후부 운전실에서 추진 운전\n※ 차장이 승무하지 않은 1인 승무 열차일 경우, 구원받아 회송 조치\n[참고] EPanDS 취급 시기\n1. 운전 중 또는 작업 중에 급히 Pan을 하강시킬 필요가 있는 경우\n2. 전차선로 장애물 검지시\n3. 교직절환 순간 MCB 양소등 발생시\n4. 교직절환 중 MCB ON등 점등시\n5. 교직절환 순간 교류전원 표시등(ACV등) 소등시",
+          "hint": "전"
+        },
+        {
+          "id": "6.38",
+          "kind": "old",
+          "title": "EGCS 고착 또는 복귀 불능 시 조치",
+          "prompt": "6.38 EGCS 고착 또는 복귀 불능 시 조치",
+          "answer": "• 전부 운전실 PanDN 차단하고 관제사가 지시하는 역까지 운전",
+          "hint": "전"
+        },
+        {
+          "id": "6.39",
+          "kind": "old",
+          "title": "임시 신호기 종류",
+          "prompt": "6.39 임시 신호기 종류",
+          "answer": "• 서행 예고 신호기, 서행 신호기, 서행 해제 신호기",
+          "hint": "서"
+        },
+        {
+          "id": "6.40",
+          "kind": "old",
+          "title": "임시 신호기 지나 동력 운전 시점",
+          "prompt": "6.40 임시 신호기 지나 동력 운전 시점",
+          "answer": "1) ATC 구간은 전부 TC차가 서행 해제 신호기 지점에 도달하였을 때\n2) ATC 외 구간은 후부 TC차가 서행 해제 신호기를 지난 후 동력 운전\n※ ATC 구간은 서행 구역에서 전동차 편성 길이를 지난 지점에 서행 해제 신호기 설치",
+          "hint": "AA"
+        },
+        {
+          "id": "6.41",
+          "kind": "old",
+          "title": "임시 신호기(서행 예고 신호기) 설치 지점",
+          "prompt": "6.41 임시 신호기(서행 예고 신호기) 설치 지점",
+          "answer": "1) 지상 구간은 서행 신호기 전방 400m 이상 지점\n2) 지하 구간은 200m 이상 지점에 설치",
+          "hint": "지지"
+        },
+        {
+          "id": "6.42",
+          "kind": "old",
+          "title": "비상 전호 요령",
+          "prompt": "6.42 비상 전호 요령",
+          "answer": "• 주간에는 양팔을 높이 들거나 녹색기 이외의 물건을 급격히 휘두르고, 야간에는 녹색등 이외의 등을 급격히 휘두르거나 양팔을 높이 든다.",
+          "hint": "주"
+        },
+        {
+          "id": "6.43",
+          "kind": "old",
+          "title": "기관사 안전장치(DSD)가 작동되지 않는 경우(DSD a접점)",
+          "prompt": "6.43 기관사 안전장치(DSD)가 작동되지 않는 경우(DSD a접점)",
+          "answer": "1) 정차(또는 운전 속도 5km/h 이하) 중 ZVR 여자 시\n2) 제동 취급으로 ELBR 여자 시\n3) DSSRR(절연 구간 표시 보조 계전기) 여자 시\n4) 동력 핸들(DSD)을 누르고 있을 때\n[참고]\n기관사 안전장치(DSD)가 작동하면 5초 동안 경고음(“안전 운행 합시다.”)이 울리고, 복귀\n되지 않으면 EMR2를 무여자 시켜 비상제동이 작용",
+          "hint": "정제D동"
+        },
+        {
+          "id": "6.44",
+          "kind": "old",
+          "title": "EBCOS 투입 중 기관사 안전장치(DSD) 작동 관련",
+          "prompt": "6.44 EBCOS 투입 중 기관사 안전장치(DSD) 작동 관련",
+          "answer": "• 경고음은 계속 울리지만 비상제동은 체결되지 않음",
+          "hint": "경"
+        },
+        {
+          "id": "6.45",
+          "kind": "old",
+          "title": "안산, 과천선 선로 최고 속도",
+          "prompt": "6.45 안산, 과천선 선로 최고 속도",
+          "answer": "• 안산, 과천선 선로 최고 속도는 110km/h임. 다만 과천선(금정~남태령)은 차내 신호기 (ADU)에 최고 80모드 현시되므로 80km/h 이 하 운전",
+          "hint": "안"
+        },
+        {
+          "id": "6.46",
+          "kind": "old",
+          "title": "지하 구간 운전 중 화재 발생 시 조치",
+          "prompt": "6.46 지하 구간 운전 중 화재 발생 시 조치",
+          "answer": "1) 관제사에게 화재 상황 급보 및 119와 관계처 직원 출동 요청 후, 차장에게 안내 방송과 승객분산 조치를 하도록 통보\n2) 최근 정거장까지 운전하여 여객 대피시킨 후, 출동한 119 및 직원과 함께 소화 조치",
+          "hint": "관최"
+        },
+        {
+          "id": "6.47",
+          "kind": "old",
+          "title": "출입문 고장에 따른 열차 회송 시",
+          "prompt": "6.47 출입문 고장에 따른 열차 회송 시",
+          "answer": "• 마지막 열차 외에는 관제사 지시로 회송 조치함. 지하 구간 회송 시 승강장 통과 속도는 45km/h 이하(한국철도공사 구간 60km/h)",
+          "hint": "마"
+        },
+        {
+          "id": "6.48",
+          "kind": "old",
+          "title": "전체 출입문이 열리지 않는 경우",
+          "prompt": "6.48 전체 출입문이 열리지 않는 경우",
+          "answer": "1) 전부 TC차 CrSN 확인\n2) ATCN, ATCPSN, BVN1 차단 여부 확인(ZVR 무여자로 출입문이 열리지 않음)\n3) 전부 TC차에서 DOS 취급해 볼 것\n4) 관제사 보고 후, 후부 운전실 제어대 LSBS ON 취급하고 DOS 취급",
+          "hint": "전A전관"
+        },
+        {
+          "id": "6.49",
+          "kind": "old",
+          "title": "출입문 양 소등 현상",
+          "prompt": "6.49 출입문 양 소등 현상",
+          "answer": "• 출입문(DOOR)등과 출입문 차측등이 모두 소등되어 있는 상태",
+          "hint": "출"
+        },
+        {
+          "id": "6.50",
+          "kind": "old",
+          "title": "전ㆍ후부 운전실 DILPN 차단 후 복귀 불능 시 현상과 조치",
+          "prompt": "6.50 전ㆍ후부 운전실 DILPN 차단 후 복귀 불능 시 현상과 조치",
+          "answer": "▶ 현상 : 출입문(DOOR)등과 계기등이 소등\n▶ 조치\n1) 전부 운전실 DILPN 복귀 불능 시는 동력 운전이 가능하므로 관제사 지시에 따라 주의 운전\n2) 후부 운전실 DILPN 복귀 불능 시 및 DS 접점 불량 시는 동력 운전 불능이므로 관제사 승인을 받고 DIRS(비연동) 투입하고 관제사가 지시하는 역까지 주의 운전\n※ 1), 2)의 경우 모니터로 출입문 닫힘 상태 확인하면서 운전.",
+          "hint": "출전후"
+        },
+        {
+          "id": "6.51",
+          "kind": "old",
+          "title": "1개 출입문이 닫히지 않을 때 조치",
+          "prompt": "6.51 1개 출입문이 닫히지 않을 때 조치",
+          "answer": "1) 해당 출입문 전자밸브(DMV) 및 공기관 Cock 이물질 확인\n2) 관제사에게 보고 후 역무원 등 안내원 승차와 DIRS 취급 승인을 받고, 승객 분산 조치\n3) 출입문 수동 잠금 및 고장 안내문 부착 후 차량 교체 역까지 운전.\n4) 출입문 수동 잠금 불능 시 회송 조치 (마지막 열차는 역무원 등 감시자 승차, 감시자는 다른 객차로 여객을 유도, 출입문 잠 금 조치 - 잠금 불능 시 출입문 폐쇄막 설치, 감시자가 없을 경우 전철 차장이 대행. 전 철 차장 생략의 경우에는 인접 역의 감시자 승차)",
+          "hint": "해관출출"
+        },
+        {
+          "id": "6.52",
+          "kind": "old",
+          "title": "1개 출입문이 열리지 않을 때 조치",
+          "prompt": "6.52 1개 출입문이 열리지 않을 때 조치",
+          "answer": "1) 해당 출입문 전자밸브(DMV) 및 공기관 Cock 확인\n2) 관제사에게 보고 및 승객 분산 조치\n3) 출입문 수동 잠금 및 고장 안내문 부착 후 차량 교체 역까지 운전\n※ 편성 중 2개 이상 출입문 고장 시 회송",
+          "hint": "해관출"
+        },
+        {
+          "id": "6.53",
+          "kind": "old",
+          "title": "전체 출입문이 닫히지 않을 때 조치",
+          "prompt": "6.53 전체 출입문이 닫히지 않을 때 조치",
+          "answer": "1) DOS(출입문 개폐 스위치)를 수회 취급          2) CrSN OFF 후 ON 취급\n[참고]\n1. 출입문 스위치(DS) 기계적 접점\n① DILP : 출입문 7.5mm 미만 닫혔을 때 접촉, DOOR등 점등, 동력 운전 회로(DIR1, 2) 구성\n② DLP : 출입문 12.5mm 이상 열렸을 때 접촉, 출입문 차측등(적색) 점등, 모니터 출입문 열림 표시\n③ DRO : 출입문 12.5mm 이상 열렸을 때 접촉, 해당 출입문 재개폐 회로 구성\n2. 출입문 제어 공기압력은 5kg/㎠이고, 출입문 Cock는 개별 수동 Cock 8개, 전체 차단 Cock는 객실 내부 1개, 외부 2개, 총11개.\n3. 현재 안전문 오(誤)작동 발생으로 DROS 취급 회로 단선함.",
+          "hint": "D"
+        },
+        {
+          "id": "6.54",
+          "kind": "old",
+          "title": "BVN1, BVN2 차단 또는 HCRN 차단 시 조치",
+          "prompt": "6.54 BVN1, BVN2 차단 또는 HCRN 차단 시 조치",
+          "answer": "• EBCOS 취급하여도 비상제동 완해 불능이므로 관제사 지시로 추진 운전",
+          "hint": "E"
+        },
+        {
+          "id": "6.55",
+          "kind": "old",
+          "title": "ATC 차상 장치 고장 시 현상 및 조치",
+          "prompt": "6.55 ATC 차상 장치 고장 시 현상 및 조치",
+          "answer": "▶ 현상 : ADU에‘STOP’신호 현시, 경고음 울리고 비상제동 체결, 제동핸들 1~7단 위 치 에서 경고음 정지\n▶ 조치 : 관제사에게 보고, 지시를 받아 ATCCOS 차단하고 지령 운전(45km/h 이하)\n[참고] ATC 장치 고장 시 취급\n1. 즉시 정차하여 고장 내용을 역장 또는 관제사에게 보고하고 지시를 받음. (차상 장치 고장을 통보받은 관제사는 가장 가까운 정거장까지 지령 운전 지시)\n2. 지시를 받을 수 없는 경우, 차상 장치 고장 시는 통신 가능 지점까지 확인 운전하고, 지상 장치 고장 시는 해당 구간을 확인 운전",
+          "hint": "A관"
+        },
+        {
+          "id": "6.56",
+          "kind": "old",
+          "title": "ATC 차단(ATCCOS 차단 취급)하는 경우와 운전 방법",
+          "prompt": "6.56 ATC 차단(ATCCOS 차단 취급)하는 경우와 운전 방법",
+          "answer": "1) ATCCOS 차단 취급을 하는 경우\n① ATC 차상 장치 고장 시\n② ATCN, ATCPSN 차단 후 복귀 불능 시\n③ 구원열차 운전 시\n④ 대용 폐색 방식 시행 시\n※ ATCCOS 차단 취급은 반드시 관제사 승인을 받은 후 취급\n2) ATCCOS 차단 취급 운전 방법\n① ADU에 15모드 현시되고, 8초 알람 경보 울림\n② 관제사가 지정한 정거장까지 지령 운전(45km/h 이하 속도로 운전)\n※ 운전 속도 15km/h 이상에서 경고음이 울리고 ADU가 깜박(Flash)이지만, 비상제동은 작동하지 않음. 이때 속도가 높아지면 경고음도 강해짐.",
+          "hint": "AAA구대AA관"
+        },
+        {
+          "id": "6.57",
+          "kind": "old",
+          "title": "ATC 구간 지시 속도 초과 시 운전 취급",
+          "prompt": "6.57 ATC 구간 지시 속도 초과 시 운전 취급",
+          "answer": "1) 경고음(“삐~”)이 울리고 ADU에 지령 속도가 깜박(Flash)이며, 자동으로 ATC에 의한 상 용 7스텝 제동이 체결.\n2) 제동 핸들을 1~7스텝 위치로 하여 확인 제동 취급하면 경고음이 멈추지만, 지령 속도 이하가 될 때까지 ADU 깜박임은 계속됨. 이때 동력 운전 중이면 동력 핸들을 OFF 위치\n3) 실제 속도가 지시 속도 이하로 되면 제동 핸들을 완해 위치\n※ 확인 제동을 취급하지 않으면 ATC 상용 7step제동이 체결된 상태로 정차",
+          "hint": "경제실"
+        },
+        {
+          "id": "6.58",
+          "kind": "old",
+          "title": "ADU 차내 신호기에 정지(Stop)신호 현시될 수 있는 경우와 조치",
+          "prompt": "6.58 ADU 차내 신호기에 정지(Stop)신호 현시될 수 있는 경우와 조치",
+          "answer": "1) 앞서가는 열차에 접근한 경우, 또는 ATC 지상 장치 고장 등으로 레일에 신호 주파수가 없으면(무신호) ADU에 “Stop” 현시되고, ATC 속도 초과 제동 작용으로 자동 정차된 후 ADU에 “15모드”가 현시\n2) 신호 현시를 기다리거나 관제사 승인(한국철도공사 승인 생략) 후, 확인 운전(15km/h 이하)",
+          "hint": "앞신"
+        },
+        {
+          "id": "6.59",
+          "kind": "old",
+          "title": "VZ 고장 시(작동 불능 시) 현상",
+          "prompt": "6.59 VZ 고장 시(작동 불능 시) 현상",
+          "answer": "1) ATC 정지신호(“0모드”)에 의해 정차하면, ADU에 “15모드” 현시되지 않음.\n2) 원인 :\n① BVN1, ATCN, ATCPSN 차단 시\n② 차축에 설치된 속도발전기(Speed Sensor) 고장 시 등\n※ VZ(정지 속도 계전기) : 열차 정지 상태를 검지하는 계전기, 실제 속도 5km/h 이하 시 여자, ATC 비상제동으로 정차되면 복귀 역할을 하고 정차 시 출입문 열림 조건이 됨.",
+          "hint": "AB차"
+        },
+        {
+          "id": "6.60",
+          "kind": "old",
+          "title": "ATC 구간 대용 폐색 방식 시행 종류",
+          "prompt": "6.60 ATC 구간 대용 폐색 방식 시행 종류",
+          "answer": "1) 복선 운전을 할 때 : 지령식, 통신식\n2) 단선 운전을 할 때 : 지령식, 지도통신식",
+          "hint": "복단"
+        },
+        {
+          "id": "6.61",
+          "kind": "old",
+          "title": "ATS 구간에서 폐색신호기 정지신호일 경우의 운전",
+          "prompt": "6.61 ATS 구간에서 폐색신호기 정지신호일 경우의 운전",
+          "answer": "1) 신호기 바깥쪽에 일단 정차 후 정지신호 구간을 15km/h 이하로 운전\n2) 관제사 승인이 있으면 특수 스위치(ASOS)를 취급하고 45km/h(최초 열차 25km/h) 이하",
+          "hint": "신관"
+        },
+        {
+          "id": "6.62",
+          "kind": "old",
+          "title": "ATS 구간에서 15km/h 스위치를 취급하는 경우",
+          "prompt": "6.62 ATS 구간에서 15km/h 스위치를 취급하는 경우",
+          "answer": "1) 정지신호(R1) 자동폐색신호기를 넘어서 운전하거나, 넘어서 정지한 경우\n2) 폐색신호기가 소등된 구간을 운전할 경우",
+          "hint": "정폐"
+        },
+        {
+          "id": "6.63",
+          "kind": "old",
+          "title": "ATSCOS 차단 취급을 하는 경우",
+          "prompt": "6.63 ATSCOS 차단 취급을 하는 경우",
+          "answer": "1) 대용 폐색 방식 시행 시                     2) 구원 운전 시\n3) ATS 차상 장치 고장 시                   4) ATS에 의한 비상제동 완해 불능 시",
+          "hint": "대A"
+        },
+        {
+          "id": "6.64",
+          "kind": "old",
+          "title": "교-교 절연 구간 정차 시 현상 및 조치",
+          "prompt": "6.64 교-교 절연 구간 정차 시 현상 및 조치",
+          "answer": "1) 절연 구간에 근접하여 정차\n① 현상은 MCB ON 점등, AC등 점등, SIV등 점등\n② 조치는 관제사 퇴행 운전 승인 후 차장 전호에 의해 25km/h 이하로 인출 지점까지 후진 후, 다시 동력 운전 취급하여 절연 구간 통과\n2) 전부 Pan이 절연 구간에 정차\n① 현상은 MCB 양 소등, AC등 점등, SIV등 점등\n② 조치는 관제사 퇴행 운전 승인 후 차장 전호에 의해 25km/h 이하로 인출 지점까지 퇴행 후, MCBOS - MCBCS 취급하여 MCB 투입 후 다시 동력 운전 취급으로 절연 구간 통과\n3) 중간 Pan이 절연 구간에 정차\n① 현상은 MCB 양 소등, AC등 점등, SIV등 점등\n② 조치는 후부 M'차 배전반 내 ADAN, ADDN, PanVN을 차단하여 후부 Pan을 내리 고, 절연 구간 통과 후 최근 정거장 도착, 관계차단기 복귀하고 MCBOS-MCBCS 취 급하여 MCB 투입 후 운전\n4) 후부 Pan이 절연 구간에 정차\n① 현상은 MCB 양 소등, AC등 점등, SIV등 점등\n② 조치는 그대로 동력 운전 취급하여 인출, 절연 구간 통과 후 MCBOS-MCBCS 취급 하여 MCB 투입 후 운전",
+          "hint": "절은는전은는중은는후은는"
+        },
+        {
+          "id": "6.65",
+          "kind": "old",
+          "title": "교-직 절연 구간 정차 시 조치",
+          "prompt": "6.65 교-직 절연 구간 정차 시 조치",
+          "answer": "1) 전부 Pan이 절연 구간에 정차(또는 근접하여 정차)\n① 현상은 MCB OFF등 점등, AC등 또는 DC등 점등, SIV등 소등\n② 조치는 관제사의 퇴행 운전 승인 후 ADS를 절환 전의 위치로 다시 절환하여 MCB 투입 시키고, 차장 전호에 의해 15km/h 이하로 인출 가능 지점까지 퇴행 후, 다시 동력 운전 취급 하여 절연 구간 통과\n2) 중간 Pan 및 후부 pan이 절연 구간에 정차\n① 현상은 MCB 양 소등, AC등 및 DC등 점등, SIV등 점등\n② 조치는 그대로 동력 운전 취급하여 절연 구간 통과\n3) 후부 Pan이 절연 구간에 정차\n① 현상은 MCB 양 소등, AC등 또는 DC등 점등, SIV등 점등\n② 조치는 그대로 동력 운전 취급하여 절연 구간 통과",
+          "hint": "전은는중은는후은는"
+        },
+        {
+          "id": "6.66",
+          "kind": "old",
+          "title": "과천선 VVVF 전동차 PanPS 압력",
+          "prompt": "6.66 과천선 VVVF 전동차 PanPS 압력",
+          "answer": "• 4.2~4.4kg/㎠로, Pan 상승 작용",
+          "hint": "4"
+        },
+        {
+          "id": "6.67",
+          "kind": "old",
+          "title": "BCN과 VN 차단 시 현상",
+          "prompt": "6.67 BCN과 VN 차단 시 현상",
+          "answer": "1) BCN : 편성 모두 차단 시 축전지 충전 불능\n2) VN : 103선 가압되었으나 축전지 전압계 현시 불능",
+          "hint": "BV"
+        },
+        {
+          "id": "6.68",
+          "kind": "old",
+          "title": "ATC 차상 장치 구성 요소",
+          "prompt": "6.68 ATC 차상 장치 구성 요소",
+          "answer": "1) Pick Up Coil, 속도발전기, ATC Rack, ADU\n[참고]\n1. Pick Up Coil : 궤도회로로부터 지령 속도 수신\n2. 속도발전기 : 차축의 회전수에 따라 발생하는 주파수로 실제 운행 속도 검지\n3. ATC Rack : ATC함으로 지령 속도와 실제 속도를 비교하여 운전 상태 감시\n4. ADU : 차내 신호기로 실제 속도와 지령 속도 현시",
+          "hint": "P"
+        },
+        {
+          "id": "6.69",
+          "kind": "old",
+          "title": "열차 화재로 정거장 외에서 승객 대피 시 조치",
+          "prompt": "6.69 열차 화재로 정거장 외에서 승객 대피 시 조치",
+          "answer": "1) 관제사에게 상황 보고\n2) 교량 또는 터널 내 일 때 그 바깥까지 운전, 지하구간은 최근 역 또는 지하 구간 밖으로 운전.\n3) 열차 정차 후 신속한 소화 조치 및 여객을 안전한 장소로 대피 유도 또는 화재 차량을 격리 조치",
+          "hint": "관교열"
+        },
+        {
+          "id": "6.70",
+          "kind": "old",
+          "title": "ATS 알람 벨(Alarm Bell)이 계속 작동 시",
+          "prompt": "6.70 ATS 알람 벨(Alarm Bell)이 계속 작동 시",
+          "answer": "1) ATSCOS 취급 후 비상제동은 완해되나, Alarm Bell이 계속 작동할 경우 - ATS함 내 ATSN2를 차단\n2) ATS Alarm Bell이 계속 울리고 비상제동이 작동할 경우 조치 - ATS함 내 ATSN1를 확인하여 복귀 취급",
+          "hint": "AA"
+        },
+        {
+          "id": "6.71",
+          "kind": "old",
+          "title": "전차선 장애로 Pan 파손 시 현상 및 조치",
+          "prompt": "6.71 전차선 장애로 Pan 파손 시 현상 및 조치",
+          "answer": "▶ 현상 : 해당 차량 MCB 차단으로 MCB 양 소등, SIV 점등, Power등 점등 불능\n▶ 조치 :\n1) 관제사에게 관계 직원 출동 요청하여 파손된 Pan을 결박 조치\n2) 해당 차량 완전 부동 취급(ADAN, ADDN 차단, PanVN 차단 및 Pan 공기관 Cock 차단) 후 연장 급전(IVCN 차단, ESS 1 또는 2위치)",
+          "hint": "해관해"
+        },
+        {
+          "id": "6.72",
+          "kind": "old",
+          "title": "전동 열차 편성 중 5개 차량 제동 불능 시 조치",
+          "prompt": "6.72 전동 열차 편성 중 5개 차량 제동 불능 시 조치",
+          "answer": "• 제동축 비율에 따라 70km/h 이하의 속도로 운전\n※ 제동축 비율에 따른 운전속도 제동축 비율(%)   100미만 ~ 50이상    80미만 ~ 60이상   60미만 ~ 40미만            40미만 제한속도         110km/h          90km/h       70km/h      최근 정거장까지 25km/h 이하로 운행",
+          "hint": "제"
+        },
+        {
+          "id": "6.73",
+          "kind": "old",
+          "title": "축전지 전압이 낮을 경우 ACM 구동 방법",
+          "prompt": "6.73 축전지 전압이 낮을 경우 ACM 구동 방법",
+          "answer": "1) M'차 1칸만 선택하여 ACM을 구동하기 위하여 나머지 차량의 ACMN 또는 ACMKN을 차단 후 ACMCS를 취급\n2) ACM 구동된 1개 차량의 Pan 상승, MCB 투입으로 SIV 및 CM 구동하여 충기(充氣)가 된 MR 압력으로 나머지 차량을 기동\n※ ACM 구동 불능 시 현상 및 조치\n- 전체 ACM 구동 불능 시에는 운전실에서 ACMCS 취급할 때 ACM 표시등이 점등되지 않 으며, 운전실 HCRN 차단 여부를 확인",
+          "hint": "MA전"
+        },
+        {
+          "id": "6.74",
+          "kind": "old",
+          "title": "대용 폐색 방식이란",
+          "prompt": "6.74 대용 폐색 방식이란",
+          "answer": "1) 폐색장치의 고장 또는 기타 사유로 상용 폐색 방식을 사용할 수 없을 경우에 대용으로 사용하는 폐색 방식\n2) 도시철도운전규칙에서는 복선 운전 시 지령식 또는 통신식, 단선 운전 시 지도통신식을 사용\n3) 철도차량운전규칙에서는 통신식, 지도통신식, 지도식, 지령식",
+          "hint": "폐도철"
+        },
+        {
+          "id": "6.75",
+          "kind": "old",
+          "title": "기관사가 운전실 이석 시 조치",
+          "prompt": "6.75 기관사가 운전실 이석 시 조치",
+          "answer": "1) 역장 또는 관제사에게 사유 보고\n2) 주차제동 체결, 구름 방지 조치 후 MC 키를 휴대하고 운전실 문 쇄정",
+          "hint": "역주"
+        },
+        {
+          "id": "6.76",
+          "kind": "old",
+          "title": "사고 시 열차 방호의 종류와 방법",
+          "prompt": "6.76 사고 시 열차 방호의 종류와 방법",
+          "answer": "1) 열차 방호의 종류(한국철도공사 구간)\n① 열차무선 방호장치 방호                          ② 무선전화기 방호\n③ 열차 표지 방호                              ④ 정지 수신호 방호\n⑤ 방호스위치 방호                              ⑥ 역구내 신호기 일괄제어 방어\n2) 열차방호의 방법\n① 열차의 방호는 지장선로의 앞·뒤 양쪽에 시행함을 원칙으로 한다.\n② 다만, 열차가 진행하여 오지 않음이 확실한 방향과 무선전화기 방호에 따라 관계 열 차에 지장 사실을 확실히 통보한 경우에는 정지수신호 방호 또는 열차표지 방호를 생략할 수 있다.\n[참고] 무선전화기 방호 방법\n- 열차 무선전화 채널을 비상 통화 위치로 이동\n- “○열차 ○○ ~ △△역 간 상(하)선 무선 방호”라고 3~5회 반복 통보",
+          "hint": "열열열방열열다"
+        },
+        {
+          "id": "6.77",
+          "kind": "old",
+          "title": "임시신호기 설치 위치",
+          "prompt": "6.77 임시신호기 설치 위치",
+          "answer": "1) 서행 예고 신호기 : 서행 신호기 이전 200m(지상 구간 400m) 이상에 설치\n2) 서행 신호기 : 지장 개소로부터 50m 이전에 설치\n3) 서행 해제 신호기 : 지장 개소로부터 50m+ 전동차 편성 길이” 이상의 거리에 설치 (지상 구간은 지장 개소로부터 50m 지난 지점에 설치)",
+          "hint": "서서서"
+        },
+        {
+          "id": "6.78",
+          "kind": "old",
+          "title": "전부운전실 ATCN트립 발생시 현상",
+          "prompt": "6.78 전부운전실 ATCN트립 발생시 현상",
+          "answer": "1) 비상제동 작동\n2) ADU 무현시(소등)\n3) 동력 운전 불능\n4) 정차 후 출입문 열림 불능(ZVR 무여자)\n5) 정차 중 DSD 누르지 않고 제동 완해하면 운전자 경계장치 작동(ZVR 무여자)",
+          "hint": "비A동정정"
+        },
+        {
+          "id": "6.79",
+          "kind": "old",
+          "title": "DSD 작동하지 않는 경우",
+          "prompt": "6.79 DSD 작동하지 않는 경우",
+          "answer": "1) 정차 또는 5km/h 이하로 운행하여 ZVR 여자 되는 경우\n2) 제동 취급으로 ELBR 여자 되는 경우\n3) DSSRR(절연 구간 표시 보조 계전기) 여자 되는 경우\n4) 동력 제어기(DSD)를 누르고 있는 경우",
+          "hint": "정제D동"
+        },
+        {
+          "id": "6.80",
+          "kind": "old",
+          "title": "BVN1, 2차단 시 현상",
+          "prompt": "6.80 BVN1, 2차단 시 현상",
+          "answer": "1) 비상제동 체결\n2) 출입문 취급 불능(ZVR 무여자)\n3) ATS, ATC 작동 불능\n4) 동력 운전 불능",
+          "hint": "비출A동"
+        },
+        {
+          "id": "6.81",
+          "kind": "old",
+          "title": "DOS의 DCS(출입문 닫힘 스위치)접점 불량시 조치",
+          "prompt": "6.81 DOS의 DCS(출입문 닫힘 스위치)접점 불량시 조치",
+          "answer": "1) DCS 접점 불량 방향의 출입문을 연 후 DCS 취급하여 출입문이 닫히지 않으면 CrSN OFF 후 ON 취급\n2) 운행 중 DCS접점 불량 방향으로 승강장이 있는 경우 DOS 취급으로 출입문 개방 후, CrSN OFF 후 ON 취급으로 전체 출입문 닫을 것\n3) 관제사 보고 후 지시하는 역까지 운행하고 회송 조치",
+          "hint": "D운관"
+        },
+        {
+          "id": "101",
+          "kind": "new",
+          "title": "전도운전 및 무동력운전에 대하여 설명",
+          "prompt": "101 전도운전 및 무동력운전에 대하여 설명",
+          "answer": "• 전도운전 : 신호를 주시하며 전방에 이상 없음을 확인하고 운전하는 것\n• 무동력 운전 : 동력 핸들 OFF, 열차 관성에 의한 타력으로 운행하는 것",
+          "hint": "전무"
+        },
+        {
+          "id": "102",
+          "kind": "new",
+          "title": "단속 운전 취급",
+          "prompt": "102 단속 운전 취급",
+          "answer": "• 구원 열차 연결, 기지 내 주의 개소 운전 시 동력 핸들을 잠깐 1~2단 후 OFF를 반복 취급하여 운전하는 것",
+          "hint": "구"
+        },
+        {
+          "id": "103",
+          "kind": "new",
+          "title": "퇴행운전 및 추진운전에 대하여 설명",
+          "prompt": "103 퇴행운전 및 추진운전에 대하여 설명",
+          "answer": "• 퇴행운전 : 후진 또는 되돌이 운전이라고도 하며 열차가 운행 도중 부득이한 사유로 인해 최초의 진행 방향과 반대 방향으로 운전하는 것\n• 추진운전 : 밀기 운전이라고도 차장 고장으로 원래의 진행 방향으로 후부에서 밀고 운전하는 것",
+          "hint": "퇴추"
+        },
+        {
+          "id": "104",
+          "kind": "new",
+          "title": "완전부동 취급 및 연장급전에 대하여 설명",
+          "prompt": "104 완전부동 취급 및 연장급전에 대하여 설명",
+          "answer": "• 완전부동취급 : 차량고장 발생으로 동력차 M+M’차 Pan하강 및 MCB 등을 투입 불능상태로 조치 하여 운행하는 것\n• 연장급전 : SIV구동 불능 및 고장 발생 시, 정상 Unit의 SIV 출력 전원을 공급받을 수 있도록 조 치하는 것",
+          "hint": "완연"
+        },
+        {
+          "id": "105",
+          "kind": "new",
+          "title": "교류 및 직류 구간에서 동력 운전회로 설명",
+          "prompt": "105 교류 및 직류 구간에서 동력 운전회로 설명",
+          "answer": "• 동력운전 : 전후진제어기 → 동력핸들 → 제동계전기 → 정차시(ZVR) / 5Km/h 이상(ELBR) → PBPS 압력정상 → 출입문 닫힘(DIR) → 동력(1~4단) → 동력제어회로차단기(CN3) → TCU → 유도전동기\n• 동력전달 : 견인전동기 → 기어커플링 → 소치차 → 대치차 → 차축 → 동륜",
+          "hint": "동동"
+        },
+        {
+          "id": "106",
+          "kind": "new",
+          "title": "교류 및 직류구간 전력공급 순서",
+          "prompt": "106 교류 및 직류구간 전력공급 순서",
+          "answer": "• 직류구간 : 전차선 - Pan – MCB – ADCg – L1 – L2 – L3 – 인버터 - 유도전동기\n• 교류구간 : 전차선 - Pan – MCB – ADCg – 주휴즈 – 주변압기 – 컨버터 - 인버터 – 유도전동기",
+          "hint": "직교"
+        },
+        {
+          "id": "107",
+          "kind": "new",
+          "title": "차량고장시 기관사 기본 취급요령",
+          "prompt": "107 차량고장시 기관사 기본 취급요령",
+          "answer": "• 모니터 및 고장 표시등으로 고장내용 확인\n• MCBOS – RS – 3초후 – MCBCS\n• Pan하강 제동핸들 취거 10초 후 재기동\n• 고장차 배전반 회로차단기 확인 및 복귀\n• 원인파악 후    고장차량 차단(VCOS취급)\n※ 재기동 전 조치사항(EOCN ON, 차장통보, 승객안내방송, 출입문 폐문)",
+          "hint": "모MP고파"
+        },
+        {
+          "id": "108",
+          "kind": "new",
+          "title": "철도사고의 종류(범위)",
+          "prompt": "108 철도사고의 종류(범위)",
+          "answer": "• 철도 교통사고 : 충돌사고, 탈선사고, 열차화재사고, 기타 철도교통사고(운행관련사고)\n• 철도 안전사고 : 철도 화재사고, 철도시설 파손사고, 기타 철도안전사고",
+          "hint": "철철"
+        },
+        {
+          "id": "109",
+          "kind": "new",
+          "title": "철도사고 발생시 국토교통부 보고 사항",
+          "prompt": "109 철도사고 발생시 국토교통부 보고 사항",
+          "answer": "• 사고 발생 일시 및 장소, 사상자 등 피해사항, 사고 발생 경위, 사고수습 및 복구계획 등",
+          "hint": "사"
+        },
+        {
+          "id": "110",
+          "kind": "new",
+          "title": "차량고장시 승무원 조치 사항은",
+          "prompt": "110 차량고장시 승무원 조치 사항은",
+          "answer": "1. 관제사에게 차량상태를 신속하고 정확하게 보고 및 차장에게 안내방송 지시\n2. 고장차량 응급조치 시 초소한의 인명피해, 2. 병발사고방지. 구름방지 조치\n3. 현장출동 차량 응급조치 시 관제보고 및 수시 안내방송 실시\n4. 응급조치 장시간 소요시 축전지 방전 방지 조치, 송풍기 냉난방을 최대로 가동하여 승객불편 최 소화\n5. 재기동 또는 전후운전실 조치 불능시 관제보고 구원 요청\n6. 구원연결 후 회송운전",
+          "hint": "관고현응재구"
+        },
+        {
+          "id": "111",
+          "kind": "new",
+          "title": "열차방호장치 동작시 수신차량 현상",
+          "prompt": "111 열차방호장치 동작시 수신차량 현상",
+          "answer": "• 현상 : 적색 상황 발생등 점멸, 경보음 발생, 수신 즉시 비상제동 체결, LED 화면 상황 발생 수신 및 메시지 현시\n• 수신차량 조치 비상제동 체결되었으면 완해하고, 조치 스위치 취급, 황색 조치등 점등, 상황 발생등 계속 점멸, 경보음은 계속 울림\n• 발생차량 현상 적색 상황 발생등 점멸, 10초간 경보음 발생, LCD화면 상황발생 수신 메시지 현시",
+          "hint": "적수발"
+        },
+        {
+          "id": "112",
+          "kind": "new",
+          "title": "지적확인환호 방법",
+          "prompt": "112 지적확인환호 방법",
+          "answer": "• 먼저 취급 또는 확인할 대상 확인\n• 검지로 대상물을 정확하게 지적 확인\n• 대상물을 명칭과 상태를 정확하게 환호하고 응답",
+          "hint": "먼검대"
+        },
+        {
+          "id": "113",
+          "kind": "new",
+          "title": "사상사고 발생 시 인접선로 방호 조치",
+          "prompt": "113 사상사고 발생 시 인접선로 방호 조치",
+          "answer": "1. 관제사 또는 역장에게 인접선 지장여부 급보\n2. 관제사는 관계선로 운행 기관사에게 45키로 이하 운행지시\n3. 인전 지장선로 운행 기관사는 제한속도 준수\n4. 조치 완료시 정상운행 되도록 관계처 통보",
+          "hint": "관관인완"
+        },
+        {
+          "id": "114",
+          "kind": "new",
+          "title": "사상사고 발생 시 관제에 보고해야 하는 사항?",
+          "prompt": "114 사상사고 발생 시 관제에 보고해야 하는 사항?",
+          "answer": "• 발생일시, 발생장소, 관계열차, 사고상황, 조치사항, 사상정도, 사상자 수, 그 밖의 참고사항",
+          "hint": "발"
+        },
+        {
+          "id": "115",
+          "kind": "new",
+          "title": "AC 구간 Pan 상승 조건",
+          "prompt": "115 AC 구간 Pan 상승 조건",
+          "answer": "1 전차선 급전상태 확인\n2. 축전기 전압 74V 이상 확인\n3. ACM 공기압력 확인(ACMCS 취급, ACMLP 소등 확인)\n4. MCB 차단여부 확인\n5. 전부 TC차 MCN, HCRN 차단여부 확인\n6. 전후부 TC차 EPanDS, EGCS 작동여부 확인\n7. 후부 TC차에서 취급",
+          "hint": "1축AM전전후"
+        },
+        {
+          "id": "116",
+          "kind": "new",
+          "title": "EGS(비상접지스위치) 동작 원인 및 현상, 조치",
+          "prompt": "116 EGS(비상접지스위치) 동작 원인 및 현상, 조치",
+          "answer": "• 원인 : TC차 및 M’차량 EGCS 취급시\n• 현상 : 전차선 단전 발생, 전차선 전원표시등 소등, MCB OFF등 점등, SIV 소등, Pan 상승불능\n• 조치 : 즉시 EPanDS 취급 및 복귀 후 전후부 운전실 EGCS 동작확인, 동작된 EGCS 복귀 후 Pan 상승, EGS 용착으로 재차 동작시 해당 M’차 완전부동 취급 후 연장급전",
+          "hint": "T전즉"
+        },
+        {
+          "id": "117",
+          "kind": "new",
+          "title": "ADCg 조작부 구성요소",
+          "prompt": "117 ADCg 조작부 구성요소",
+          "answer": "• 2개의 전자변, 조작실린더, 조작레버, 링크, 신속차단 스프링, 기계적 보조스위치",
+          "hint": "2"
+        },
+        {
+          "id": "118",
+          "kind": "new",
+          "title": "TEST스위치 취급시 현상 및 조치",
+          "prompt": "118 TEST스위치 취급시 현상 및 조치",
+          "answer": "• 현상 : SqR2가 여자되어 MCB투입시 MCB-C 코일 무여자로 MCB 투입불능\n• 조치 : TEST 스위치 복귀 후 MCB 투입",
+          "hint": "ST"
+        },
+        {
+          "id": "119",
+          "kind": "new",
+          "title": "주 퓨즈 용손시 현상",
+          "prompt": "119 주 퓨즈 용손시 현상",
+          "answer": "• 적색 단추 약 30mm 돌출, MTOM 정지로 60초 후 MTOFTR이 작동, MTAR여자로 MCB차단",
+          "hint": "적"
+        },
+        {
+          "id": "120",
+          "kind": "new",
+          "title": "IVCN 차단시",
+          "prompt": "120 IVCN 차단시",
+          "answer": "• 해당차 SIV구동정지, 연장급전회로 자동구성\n• 모니터에 ‘SIV 통신이상’ 복귀시까지 현시\n• 전차량 부하(냉난방 및 객실 AC등) 반감",
+          "hint": "해모전"
+        },
+        {
+          "id": "121",
+          "kind": "new",
+          "title": "PanDN 차단시",
+          "prompt": "121 PanDN 차단시",
+          "answer": "• EPanDS취급시 판 하강 불능, EGCS 취급시 비상접지 불능",
+          "hint": "E"
+        },
+        {
+          "id": "122",
+          "kind": "new",
+          "title": "Pantograph 주요 구성기기는",
+          "prompt": "122 Pantograph 주요 구성기기는",
+          "answer": "• 습판체, 틀 조립체, 주 스프링, 작용 실린더",
+          "hint": "습"
+        },
+        {
+          "id": "123",
+          "kind": "new",
+          "title": "1개 Unit 중 1개 Pan 파손시 현상 및 조치",
+          "prompt": "123 1개 Unit 중 1개 Pan 파손시 현상 및 조치",
+          "answer": "• 현상 : 모니터에 Pan 상승 표시, MCB ON등 점등\n• 조치\n1. Pan 상태 확인 및 관제보고\n2. MCBOS 취급하여 MCB 차단\n3. PanPs 이후 판 콕크 차단\n4. Pan 하강상태 확인 및 결박\n5. 전부운전실 MCBCS 취급하여 MCB 투입",
+          "hint": "모PMPP전"
+        },
+        {
+          "id": "124",
+          "kind": "new",
+          "title": "ADS를 절환해도 MCB 차단불능 원인(교직류 전환시 MCB ON등 계속 점등시 조치)",
+          "prompt": "124 ADS를 절환해도 MCB 차단불능 원인(교직류 전환시 MCB ON등 계속 점등시 조치)",
+          "answer": "• 원인 : 2선 단선 또는 HCR(b) 접점 불량시 후부운전실 MCBHR 여자불능으로 양쪽 운전실 7선 8선 가압\n• 조치 : 즉시 EPanDS취급, 직류전환시 절연구간 40km/n이하로 운전 종착역 운전실교환 후부운전실 MCN차단 운전",
+          "hint": "2즉"
+        },
+        {
+          "id": "125",
+          "kind": "new",
+          "title": "주차단기(MCB) 주요 구성기기는",
+          "prompt": "125 주차단기(MCB) 주요 구성기기는",
+          "answer": "• 차단부, 보호 애자, 진공밸브, 기계적 보조스위치, 보온용 온열기, 조작부, PanPS",
+          "hint": "차"
+        },
+        {
+          "id": "126",
+          "kind": "new",
+          "title": "MCB 차단부 구성",
+          "prompt": "126 MCB 차단부 구성",
+          "answer": "• 전자변, 차단코일, 투입코일, 조작실린더, 조작기구",
+          "hint": "전"
+        },
+        {
+          "id": "127",
+          "kind": "new",
+          "title": "임시신호기 종류와 지상 및 지하구간 설치 위치",
+          "prompt": "127 임시신호기 종류와 지상 및 지하구간 설치 위치",
+          "answer": "• 서행예고신호기 : 서행신호기로부터 400m(지하구간 200m) 전방에 설치\n• 서행신호기 : 지장개소로부터 전방 50m 전방에 설치\n• 서행해제신호기 : 지장개소를 지나 50m + 전동차 길이 후방에 설치",
+          "hint": "서서서"
+        },
+        {
+          "id": "128",
+          "kind": "new",
+          "title": "객실 비상통화장치 동작시 현상",
+          "prompt": "128 객실 비상통화장치 동작시 현상",
+          "answer": "• 모니터 운전화면에서 고장화면 전환, 전후 운전실 “객실비상입니다” 방송음과 비상 부저음 발생, 동작차량 황색차측증 점등",
+          "hint": "모"
+        },
+        {
+          "id": "129",
+          "kind": "new",
+          "title": "전차선 단전시 현상",
+          "prompt": "129 전차선 단전시 현상",
+          "answer": "1. 전차선 전원 표시등(ACV, DCV) 소등\n2. 가선 전압계(HV) 0V 현시\n3. MCB OFF등 점등\n4. 보조전원장치(SIV) 등 소등",
+          "hint": "전가M보"
+        },
+        {
+          "id": "130",
+          "kind": "new",
+          "title": "주변압기(MT) 냉각계통 고장(MTAR 여자) 원인 및 현상, 조치",
+          "prompt": "130 주변압기(MT) 냉각계통 고장(MTAR 여자) 원인 및 현상, 조치",
+          "answer": "• 원인 : MTOMN, MTBMN 차단, MTOMK, MTBMK 무여자, 주변압기 냉각오일 흐름 불량\n• 현상 : 모니터에 주변압기 냉각기 정지 현시, 해당차 MCB 차단, Fault 점등, 해당차 차측등 점등\n• 조치\n1. 고장차 확인후 MCBOS → RS → 3초후 MCBCS 취급\n2. Pan하강, 제동핸들 취거 10초후 재기동\n3. M’차 배전반 MTOMK, MTBMK 확인 복귀\n4. 복귀후 MCBOS → RS → 3초후 MCBCS 취급(MTAR 자기유지회로 차단)\n5. 복귀 불능시 완전부동취급 후 연장급전",
+          "hint": "M모고PM복복"
+        },
+        {
+          "id": "131",
+          "kind": "new",
+          "title": "주변압기(MT) 과열 원인 및 현상, 조치",
+          "prompt": "131 주변압기(MT) 과열 원인 및 현상, 조치",
+          "answer": "• 원인 : MTBM 기능 저하로 냉각불량\n• 현상 : 모니터에 주변압기 온도 이상 발생 현시, 해당 Unit 동력운전 및 회생제동 차단\n• 조치 : 모니터로 고장차 확인, 온도 저하시까지 그대로 운전",
+          "hint": "M모모"
+        },
+        {
+          "id": "132",
+          "kind": "new",
+          "title": "주변압기 냉각장치(MTAR) 고장시 조치",
+          "prompt": "132 주변압기 냉각장치(MTAR) 고장시 조치",
+          "answer": "• 현상 : 모니터에 “주변압기 냉각기 정치 표시, 해당차 MCB차단, Fault등 및 해당 M’차 차측백색 등 점등\n• 조치 : 1. 고장차 확인 후 MCBOS – RS – 3초후 – MCBCS\n2. Pan하강 제동제어기(BC) 핸들 취거, 10초후 재기동\n3. M’차 배전반내 MTOMN, MTBMN 확인\n4. 완전부동취급 후 연장급전",
+          "hint": "모1PM완"
+        },
+        {
+          "id": "133",
+          "kind": "new",
+          "title": "주변환기 정지 시 RS 취급하여도 복귀 불능시 조치",
+          "prompt": "133 주변환기 정지 시 RS 취급하여도 복귀 불능시 조치",
+          "answer": "1. 고장차 확인 후 MCBOS – RS – 3초 후 - MCBCS 취급\n2. 제동제어기(BC) 핸들 취거\n3. 10초 후 재기동\n4. M차 C/I 고장인 경우 MCBOS – VCOS - RS – 3초 후 - MCBCS 취급 후 전도운전\n5. M’차 C/I 고장인 경우 연장급전 후 MCBOS - VCOS - RS - 3초 후 - MCBCS 취급 후 전도운전",
+          "hint": "고제1MM"
+        },
+        {
+          "id": "134",
+          "kind": "new",
+          "title": "주변압기 냉각장치 고장 시 현상 및 재기동으로도 복귀 불능시 조치",
+          "prompt": "134 주변압기 냉각장치 고장 시 현상 및 재기동으로도 복귀 불능시 조치",
+          "answer": "• 현상 : 모니터에 주변압기 냉각기 정지 표시, 해당차 MCB 차단, Fault등 및 해당 M’ 차측 백색등 점등\n• 조치\n1. 고장차 확인 후 MCBOS – RS - 3초후 – MCBCS\n2. Pan 하강, 제동제어기(BC) 취거, 10초후 재기동\n3. M’차 배전반 내 MTOMN, MTBMN 확인\n4. 완전부동 취급 후 연장급전",
+          "hint": "모고PM완"
+        },
+        {
+          "id": "135",
+          "kind": "new",
+          "title": "재기동 전 조치사항",
+          "prompt": "135 재기동 전 조치사항",
+          "answer": "• EOCN ON, 차장통보, 승객안내방송, 출입문 닫음",
+          "hint": "E"
+        },
+        {
+          "id": "136",
+          "kind": "new",
+          "title": "Fault등과 차측백색등을 소거하는 이유는",
+          "prompt": "136 Fault등과 차측백색등을 소거하는 이유는",
+          "answer": "• 운행중 Fault등과 차측백색등이 점등되는 다른 고장 발생을 인지하기 위함",
+          "hint": "운"
+        },
+        {
+          "id": "137",
+          "kind": "new",
+          "title": "주변압기 냉각불량시 현상 및 조치",
+          "prompt": "137 주변압기 냉각불량시 현상 및 조치",
+          "answer": "• 현상 : 모니터에 “주변압기 온도이상 발생” 현시, 해당 유니트 역행, 회생 차단\n• 조치 : 모니터로 고장차 확인, 그대로 운전, 온도하강 시 자동복귀, MTBM 흡입 여과망 이물질 확인",
+          "hint": "모모"
+        },
+        {
+          "id": "138",
+          "kind": "new",
+          "title": "송풍기 고장 원인 및 현상, 조치",
+          "prompt": "138 송풍기 고장 원인 및 현상, 조치",
+          "answer": "• 원인 : 고장차 CIBMN, FLBMN 차단, 해당 Unit AMCN, MTBMN 차단\n• 현상\n- AC구간 : 송풍기 정지, 20초후 C/I 정지, 10초후 SIV 정지, 60초후 MCB 차단\n- DC구간 : MCB 정상, 송풍기 정치, C/I 정지, 모니터에 송풍기 정지 현시\n• 조치\n1. 고장차 확인 후 MCBOS → RS → 3초후 MCBCS\n2. Pan하강, 제동핸들 취거, 10초 후 재기동\n3. 고장차 CIBMN, FLBMN 확인, 해당 Unit AMCN, MTBMN 확인\n4. 복귀블능시 MCBOS → RS → 3초후 MCBCS(M’차는 연장급전 후 취급)",
+          "hint": "고AD고P고복"
+        },
+        {
+          "id": "139",
+          "kind": "new",
+          "title": "송풍기 정지로 RS 취급으로도 복귀 불능시 조치",
+          "prompt": "139 송풍기 정지로 RS 취급으로도 복귀 불능시 조치",
+          "answer": "1. 고장차 확인 MCBOS – RS - 3초후 – MCBCS\n2. Pan 하강, 제동제어기(BC) 취거, 10초후 재기동\n3. 고장차 CIBMN, FLBMN 확인\n4. 해당유니트 M’차 연장급전 후 MCBOS – VCOS - RS - 3초구 – MCBCS 취급 후 전도운전",
+          "hint": "고P고해"
+        },
+        {
+          "id": "140",
+          "kind": "new",
+          "title": "모니터에 송풍기 정지 후 주변압기 냉각기 정치가 현시되는 경우 원인 및 조치사항",
+          "prompt": "140 모니터에 송풍기 정지 후 주변압기 냉각기 정치가 현시되는 경우 원인 및 조치사항",
+          "answer": "• 원인 : 1 MTOMN, MTBMN ,차단 또는 MTOMK, MTBMK 무여자            2. 주변압기유 흐름 불량\n• 조치 : 1. 고자차량 확인 MCBOS – RS – 3초 후 – MCBCS\n2. Pan 하강 제동핸들 취거 10초 후 재기동\n3. MTOMN, MTBMN 복귀\n4. MTAR 자기유지회로 차단을 위해 MCBOS – RS – 3초 후 – MCBCS\n5. 복귀 불능시 완전부동 취급 후 연장급전",
+          "hint": "11PMM복"
+        },
+        {
+          "id": "141",
+          "kind": "new",
+          "title": "교직 전환 후 1개 MCB 차단 불능인 경우 조치사항",
+          "prompt": "141 교직 전환 후 1개 MCB 차단 불능인 경우 조치사항",
+          "answer": "• 원인 및 현상 : 기계적 고착 또는 MCBN1 트립, MCB 양소등\n• 조치 : 1. 즉시 EPanDS 취급\n2. 교직 운행시 40키로 이하 운전\n3. 최근정거장 도착 후 EPanDS 복귀\n4. MCB 차단 불능차 MCBN1 확인 후 이상없는 경우 완전부동 취급후 연장급전",
+          "hint": "및1교최M"
+        },
+        {
+          "id": "142",
+          "kind": "new",
+          "title": "출입문 고장 시 기본 조치 사항",
+          "prompt": "142 출입문 고장 시 기본 조치 사항",
+          "answer": "• 차측등 및 모니터로 고장차 확인\n• DOS(출입문스위치) 수회개폐 취급\n• 고장출입문 수도 공기관 콕크 확인 및 이물질 확인\n• 복귀 불능시 공기관 콕크 차단 후 출입문 폐쇄조치",
+          "hint": "차D고복"
+        },
+        {
+          "id": "143",
+          "kind": "new",
+          "title": "차량고장시 3초후 MCBCS를 취급하는 이유",
+          "prompt": "143 차량고장시 3초후 MCBCS를 취급하는 이유",
+          "answer": "• Resrt 취급시 주변환기(C/I)내 무접점 제어장치인 TCU 초기 설정 시간 필요",
+          "hint": "R"
+        },
+        {
+          "id": "144",
+          "kind": "new",
+          "title": "RESET 취급 이유",
+          "prompt": "144 RESET 취급 이유",
+          "answer": "• 차량고장 발생 시 작동한 보호계전기 복귀\n• TCU를 고장이전 상태로 초기 설정하기 위한 신호입력",
+          "hint": "차T"
+        },
+        {
+          "id": "145",
+          "kind": "new",
+          "title": "MTOMN 차단시",
+          "prompt": "145 MTOMN 차단시",
+          "answer": "• 모니터에 주변압기 냉각기 정기, 해당 유닛 MCB차단, FAULT등과 차측등 점등",
+          "hint": "모"
+        },
+        {
+          "id": "146",
+          "kind": "new",
+          "title": "L1 정상차단과 사고차단에 관해 설명",
+          "prompt": "146 L1 정상차단과 사고차단에 관해 설명",
+          "answer": "• 정상차단\n1. MCBOS 취급(L1 무여자로 L1 차단)\n2. ADS 취급(L1 무여자로 L1차단)\n3. DCVRTR 무여자(정전, 교류모진시 MCBR1 무여자에 의한 L1R 무여자로 L1차단)\n4. VCOS 취급(COR 여자로 인한 L1R 무여자로 L1차단)\n• 사고차단\n1. 직류구간에서 주회로 1600A 이상 과전류시\n2. C/I내 GTO Arm 단락시",
+          "hint": "정MADV사직C"
+        },
+        {
+          "id": "147",
+          "kind": "new",
+          "title": "직류 모진시 현상 및 조치",
+          "prompt": "147 직류 모진시 현상 및 조치",
+          "answer": "• 현상 : 주휴즈 용손,    60초후 MCB차단\n• 조치 : 최근정거장 도착 후 해당차 완전부동취급, 연장급전 후 전도운전",
+          "hint": "주최"
+        },
+        {
+          "id": "148",
+          "kind": "new",
+          "title": "연장급전 시 ESPS를 취급시 현상",
+          "prompt": "148 연장급전 시 ESPS를 취급시 현상",
+          "answer": "• SIVFR 여자 차량의 IVCV은 자동으로 트립\n• SIVFR이 무여자 시 수동으로 IVCN 차단",
+          "hint": "SS"
+        },
+        {
+          "id": "149",
+          "kind": "new",
+          "title": "MCN 차단 후 복귀 불능시 기관사 조치는",
+          "prompt": "149 MCN 차단 후 복귀 불능시 기관사 조치는",
+          "answer": "• 전부차 MCN차단 후 후부 운전실에서 추진하여 회송운전",
+          "hint": "전"
+        },
+        {
+          "id": "150",
+          "kind": "new",
+          "title": "차량고장 발생 시 Pan하강, 제동핸들 취거 후 10초 후 재기동하는 이유",
+          "prompt": "150 차량고장 발생 시 Pan하강, 제동핸들 취거 후 10초 후 재기동하는 이유",
+          "answer": "• OVCRF(과전압방지사이리스터) 점호 및 게이트 전원 고장 후 5초가 기기의 손상 방지를 위해 주 회로 중전 차단 위함",
+          "hint": "O"
+        },
+        {
+          "id": "151",
+          "kind": "new",
+          "title": "보조전원장치 구성요소",
+          "prompt": "151 보조전원장치 구성요소",
+          "answer": "• 변압기, 주휴즈 및 단로기, 인버터 함, 연장급전 접촉기, 절류평형 저항기, 고속도 차단기",
+          "hint": "변"
+        },
+        {
+          "id": "152",
+          "kind": "new",
+          "title": "SIV고장으로 복귀 불능시 조치",
+          "prompt": "152 SIV고장으로 복귀 불능시 조치",
+          "answer": "1 고장차 확인 후 MCBOS – RS – 3초 후 - MCBCS\n2. Pan 하강, 제동제어기(BC) 핸들 취거, 10초 후 재기동\n3. 연장급전 후 MCBOS – RS – 3초 후 - MCBCS\n4. TC, T1차 IVCN 차단확인, M’차 AMCN 차단확인",
+          "hint": "1P연T"
+        },
+        {
+          "id": "153",
+          "kind": "new",
+          "title": "SIV 중고장 발생 시 조차사항",
+          "prompt": "153 SIV 중고장 발생 시 조차사항",
+          "answer": "1. MCBOS – RS – 3초 후 – MCBCS\n2. 정차후 Pan 하강 – 제동핸들 취거 - 10초후 재기동\n3. SIVFR 여자로 ESPS 취급\n4. 모니터로 연장급전 화인 후 MCBOS – RS – 3초 후 – MCBCS",
+          "hint": "M정S모"
+        },
+        {
+          "id": "154",
+          "kind": "new",
+          "title": "고압보조회로동작 주요 구성 기기",
+          "prompt": "154 고압보조회로동작 주요 구성 기기",
+          "answer": "• SIV, MTOM, MTBM, CIBM, FLBM, HV, EQrE, 전동기 전류계",
+          "hint": "S"
+        },
+        {
+          "id": "155",
+          "kind": "new",
+          "title": "Reset 취급불능시 조치",
+          "prompt": "155 Reset 취급불능시 조치",
+          "answer": "• 조치 : Pan 하강, 제동핸들(BC) 취거, 10초후 재기동, VCOS 최급, M’차 연장급전",
+          "hint": "P"
+        },
+        {
+          "id": "156",
+          "kind": "new",
+          "title": "VCOS 취급 후 복귀방법",
+          "prompt": "156 VCOS 취급 후 복귀방법",
+          "answer": "• 고장원인 제거 후 차량차단복귀스위치(VRS) 취급",
+          "hint": "고"
+        },
+        {
+          "id": "157",
+          "kind": "new",
+          "title": "ACArr(교류피뢰기) 동작 원인 및 현상, 조치",
+          "prompt": "157 ACArr(교류피뢰기) 동작 원인 및 현상, 조치",
+          "answer": "• 원인 : 운행 중 낙뢰 등 외부 Surge전압 유입 시\n• 현상 : 전차선 단전 및 ACV등 소등, MCB OFF등 점등\n• 조치 : 폭발음 및 승객제보로 고장차 확인 또는 Pan하강 및 MCB차단 후 투입하여 해당차 확인, 이후 해당차량 완전부동취급 후 연장급전",
+          "hint": "운전폭"
+        },
+        {
+          "id": "158",
+          "kind": "new",
+          "title": "EOCN 취급시 사용 가능 기능",
+          "prompt": "158 EOCN 취급시 사용 가능 기능",
+          "answer": "• 객실 비상등 4개 점등, 열차 무선전화 가능, 실내방송, 차내전화기 가능(연락부져 불능)",
+          "hint": "객"
+        },
+        {
+          "id": "159",
+          "kind": "new",
+          "title": "교류과전류 1차 발생 원인 및 현상, 조치",
+          "prompt": "159 교류과전류 1차 발생 원인 및 현상, 조치",
+          "answer": "• 원인 : MT 1차측 120A 이상 과전류 유입으로 ACOCR 동작\n• 현상 : 모니터에 AC 과전류 현시, MCB 양소등, Fault 점등, 해당차 차측등 점등\n• 조치 : 모니터 및 차측등으로 고장차 확인, MCBOS → RS → 3초후 MCBCS 취급",
+          "hint": "M모모"
+        },
+        {
+          "id": "160",
+          "kind": "new",
+          "title": "HCRN 차단시 현상",
+          "prompt": "160 HCRN 차단시 현상",
+          "answer": "• 전후운전실 선택 불능\n• 운전실내 표시등 소등\n• 모니터에 EB(비상제동) 현시\n• DOOR등, 계기등 점등 불능 및 동력 불능\n• ATS전원 공급차단\n• ATS 위치에서 ADU 15현시 점등 및 8초마다 경고음 발생",
+          "hint": "전운모DAA"
+        },
+        {
+          "id": "161",
+          "kind": "new",
+          "title": "ACM 충기 불능시 현상 및 원인",
+          "prompt": "161 ACM 충기 불능시 현상 및 원인",
+          "answer": "• 현상 : ACMCS 취급시 ACM 구동불능(ACMLp 점등 안됨)\n• 원인 : 축전지 전압 70V 이하시,. 전부운전실 HCRN 차단시\n※ ACM 공기충만(6.5~7.5 키로)시 ACMCS 취급하면 ACMLp는 점등되나 손을 떼면 바로 소등\n• 조치 : 축전지 전압 70V 이상 확인, 전부운전실 HCRN 차단 확인, 전부운전실 ACM 구동불능시 후부운전실 또는 M’차 ACMCS 취급",
+          "hint": "A축축"
+        },
+        {
+          "id": "162",
+          "kind": "new",
+          "title": "화재발생시 승객을 차 외 선로로 안전하게 대피시키는 방법",
+          "prompt": "162 화재발생시 승객을 차 외 선로로 안전하게 대피시키는 방법",
+          "answer": "• 관제사 및 인접 역장에게 통보\n• 직접 육안으로 차외의 상태를 확인\n• 후속열차 및 인접선로에 대한 열차방호 시행\n• 안전한 장소로 승객 대피 유도",
+          "hint": "관직후안"
+        },
+        {
+          "id": "163",
+          "kind": "new",
+          "title": "구원운전시 고장차 후부운전실 DILPN차단 이유",
+          "prompt": "163 구원운전시 고장차 후부운전실 DILPN차단 이유",
+          "answer": "• 구원연결 후 12점퍼선 연결시 145선으로 고장치 DILPN을 거친 전원이 구원열차 DIR1,2를 직접 여자로 구원열차 출입문 열림 상태에서 DOOR등 점등으로 동력 운전이 가능하여 안전사고 발생을 차단하기 위함",
+          "hint": "구"
+        },
+        {
+          "id": "164",
+          "kind": "new",
+          "title": "승강장이 아닌 곳에서 승객을 대피시켜야 하는 경우",
+          "prompt": "164 승강장이 아닌 곳에서 승객을 대피시켜야 하는 경우",
+          "answer": "• 관제보고, 인접선 열차 정차 확인, 운전실 또는 객실 비상 사다리를 이용 하차 유도",
+          "hint": "관"
+        },
+        {
+          "id": "165",
+          "kind": "new",
+          "title": "운전실 교환시 조치",
+          "prompt": "165 운전실 교환시 조치",
+          "answer": "• 도착운전실 : 전후진제어기 OFF, 마스콘키(MC) 취거, 제동제어기(BC) 취거\n• 출발운전실 : 제동제어기 투입, ADS 정위치 확인, ATCCgS 해당위치로 절환, MCBCS 취급, 마스콘키(MC) 투입, 전후진 제어기 전진 전환",
+          "hint": "도출"
+        },
+        {
+          "id": "166",
+          "kind": "new",
+          "title": "ACM 구동불능시 현상 및 조치",
+          "prompt": "166 ACM 구동불능시 현상 및 조치",
+          "answer": "• 현상 : 1 ACMCS를 취급하여도 ACM이 구동되지 않음, 2 ACM Lamp 점등 불능\n• 조치 : 1 축전지 전압이 74V 이상 확인 2 전부 운전실 HCRN 차단여부 확인, 복구\n3. 전부 운전실에서 구동 불능시 후부 운전실 또는 M’차의 ACMCS 취급",
+          "hint": "11전"
+        },
+        {
+          "id": "167",
+          "kind": "new",
+          "title": "레일면 이상 침수 시 기관사 조치 및 측정방법",
+          "prompt": "167 레일면 이상 침수 시 기관사 조치 및 측정방법",
+          "answer": "1. 레일면을 초과하여(이상) 침수된 경우 열차운행 중지\n2. 침수지점 전방에 정차하여 관제사에게 급보\n3. 관제사의 지시에 따라 조치하고\n4. 차장에게 안내방송 지시\n5. 수위 측정은 열차 정차 후 레읿면을 기준으로 목측으로 확인",
+          "hint": "레침관차수"
+        },
+        {
+          "id": "168",
+          "kind": "new",
+          "title": "PEC 공전전환기 역할과 모니터 전송방법",
+          "prompt": "168 PEC 공전전환기 역할과 모니터 전송방법",
+          "answer": "• 역할\n1. 중계변 공기압력을 전기신호 변환\n2. 제동 불완해, 제동력 부족 신호 검지\n3. 모니터 제어기기에 신호 전송, CRV 제어\n• 모니터 전송방법 : 공기압력을 아날로그 신호로 변환하여 전송",
+          "hint": "역중제모모"
+        },
+        {
+          "id": "169",
+          "kind": "new",
+          "title": "EOD 기능",
+          "prompt": "169 EOD 기능",
+          "answer": "1. 응하중 신호 생성            2. 제동패턴 생성                 3. 전기제동 피드백 수신\n4. 전기제동 전류 감지           5. 저크제어                    6. 일괄교차제어\n7. 히스테리시스 보정            8. 인쇼트 기능                  9. 모니터 정보 전송",
+          "hint": "응전히"
+        },
+        {
+          "id": "170",
+          "kind": "new",
+          "title": "ATS/ATC장치 구동원리, 운전방법",
+          "prompt": "170 ATS/ATC장치 구동원리, 운전방법",
+          "answer": "• ATS 지시 속도와 열차 실제속도를 비교, 실제 속도가 높을때 경고음 울리고 3초내 확인제동 미 취급시 비상제동 체결, 지시속도 이하로 내려가면 제동 완해 정상운행\n• ATC 지시 속도 초과시 경고음 울림, 상용 7단 제동체결, 지시속도 초과시 확인제동(1~7단) 취급 하면 경고음 소멸, 지시속도 이하로 내려가면 제동완해 정상운행",
+          "hint": "AA"
+        },
+        {
+          "id": "171",
+          "kind": "new",
+          "title": "ATC 구간에서 열차 1량 출입문이 승강장 위치를 지나 정차한 경우 조치는",
+          "prompt": "171 ATC 구간에서 열차 1량 출입문이 승강장 위치를 지나 정차한 경우 조치는",
+          "answer": "• 비상부져 취급, 차장에 안내방송지시, 15키로 이하로 퇴행하여 정지 위치 합치 정차, 관제보고(정 지위치 지났으나 이상 없어 전도 운전), 차장에게 발차 전호",
+          "hint": "비"
+        },
+        {
+          "id": "172",
+          "kind": "new",
+          "title": "ATC 구간에서 일부차량이 출발경계표지를 지나서 정차하였을 경우 조치",
+          "prompt": "172 ATC 구간에서 일부차량이 출발경계표지를 지나서 정차하였을 경우 조치",
+          "answer": "• 차장에게 안내방송 지시, 관제실에 퇴행 승인 신청, 15키로 이하로 퇴행, 정치 위치 합치, 관제보 고 후 전도운전",
+          "hint": "차"
+        },
+        {
+          "id": "173",
+          "kind": "new",
+          "title": "ATS구간 R0 진입시 현상 및 조치",
+          "prompt": "173 ATS구간 R0 진입시 현상 및 조치",
+          "answer": "• 현상 : 즉시 비상제동이 체결되고 알람벨 울리며 속도계 R0현시\n• 조치 : 열차 정지 후 제동핸들 비상위치 후 7단, 관제승인 ASOA 취급",
+          "hint": "즉열"
+        },
+        {
+          "id": "174",
+          "kind": "new",
+          "title": "ATS 차상장치 고장 시 현상 및 조치",
+          "prompt": "174 ATS 차상장치 고장 시 현상 및 조치",
+          "answer": "• 현상 : 비상제동 동작\n• 조치 : 1. 관제실에 차량상태 보고 및 ATSCOS 차단 승인 요구\n2. 관제 차단 승인에 의하여 ATSCOS 차단\n3. 신호 현시 조건에 따라 규정속도 준수하여 전도운전\n4. 비상제동 완해. 역행불능시 ATCCOS도 차단",
+          "hint": "비1관신비"
+        },
+        {
+          "id": "175",
+          "kind": "new",
+          "title": "ATC 기능",
+          "prompt": "175 ATC 기능",
+          "answer": "• 실제속도 검지, 전원공급, 운전실 표시, 구내운전, 열차정지속도 검지, 제동력 보장 기능",
+          "hint": "실"
+        },
+        {
+          "id": "176",
+          "kind": "new",
+          "title": "지령식 시행시기 및 시행조건",
+          "prompt": "176 지령식 시행시기 및 시행조건",
+          "answer": "• 시행시기 : ATC구간 궤도회도 장애 및 차장상치 고장시 시행\n• 시행조건\n1. 관제사가 시행구간에 열차 또는 차량없음을 반드시 확인\n2. 지령운전 구간 및 승인은 무선전화기를 사용하여 기관사에게 직접 지시 (통화 불능시 인접 운전취급 역장에게 운전명령으로 지시)\n3. 정거장을 연이어 지령 운전하는 경우 1호, 2호 취급 반복",
+          "hint": "시시관지정"
+        },
+        {
+          "id": "177",
+          "kind": "new",
+          "title": "제동 불완해 발생 시 강제완해 가압조건",
+          "prompt": "177 제동 불완해 발생 시 강제완해 가압조건",
+          "answer": "• 1 PEC에서 제동불완해 검지, 2 모니터로 해당 신호 전송, 3 CpR지령 발생, CRV여자 제동통압력 배기 4 제어대 강제완해중 표시",
+          "hint": "1"
+        },
+        {
+          "id": "178",
+          "kind": "new",
+          "title": "운전지령계전기 종류",
+          "prompt": "178 운전지령계전기 종류",
+          "answer": "• SC(지령속도계전기), SS(정지후 진행계전기), YCR",
+          "hint": "S"
+        },
+        {
+          "id": "179",
+          "kind": "new",
+          "title": "제동불완해 감지지령선 가압조건",
+          "prompt": "179 제동불완해 감지지령선 가압조건",
+          "answer": "1. 비상제동이 체결되지 않았을 때\n2. 상용제동이 체결되지 않았을 때\n3. ATC제동이 체결되지 않았을 때\n4. 보안제동이 체결되지 않았을 때\n→ 5초가 경과하여도 제동통압력이 0.8키로를 초과하면 제동불완해가 발생한 것으로 인지하여 모니터장치에 제동불완해 신호를 전송함",
+          "hint": "비상A보5"
+        },
+        {
+          "id": "180",
+          "kind": "new",
+          "title": "ATC 계전기의 종류",
+          "prompt": "180 ATC 계전기의 종류",
+          "answer": "•    ACK(제동확인계전기),    VZ(정지속도계전기),       EBR(ATC비상제동계전기),   BA(제동력보증계전기), YARD2(구내계전기)",
+          "hint": "A"
+        },
+        {
+          "id": "181",
+          "kind": "new",
+          "title": "비상제동 보안기기",
+          "prompt": "181 비상제동 보안기기",
+          "answer": "• ATSCOS, ATCCOS, EBCOS",
+          "hint": "A"
+        },
+        {
+          "id": "182",
+          "kind": "new",
+          "title": "ATS 초기 설정시기 및 현상",
+          "prompt": "182 ATS 초기 설정시기 및 현상",
+          "answer": "1. 45키로 이하 속도 설정(다음 신호기를 지나면 해당 신호에 따라 운전)\n2. R0등 점등 후 소등\n3. ATS알람 동작 후 정상동작 ATS등 점등",
+          "hint": "4RA"
+        },
+        {
+          "id": "183",
+          "kind": "new",
+          "title": "TC차 외의 차량에서 DLPN차단시 현상",
+          "prompt": "183 TC차 외의 차량에서 DLPN차단시 현상",
+          "answer": "• 출입문 취급시 모니터에 해당 차량 출입문 닫힘 표시, 출입문 차측등 점등불능\n• TC차인 경우 전차량 출입문 반감 취급불능",
+          "hint": "출T"
+        },
+        {
+          "id": "184",
+          "kind": "new",
+          "title": "출입문스위치(CRS) 고착으로 닫힘 불능시 조치사항",
+          "prompt": "184 출입문스위치(CRS) 고착으로 닫힘 불능시 조치사항",
+          "answer": "1. CRS 취급 후 출입문이 닫히지 않음\n2. 전부운전실 배전반 CrSN OFF하면 고착된 방향 출입문은 닫히고 다시 CrSN을 ON하면 다시 열림\n3. 관제사 보고 후 지시를 받아 회송조치",
+          "hint": "C전관"
+        },
+        {
+          "id": "185",
+          "kind": "new",
+          "title": "DROS 고착시 출입문 취급방법",
+          "prompt": "185 DROS 고착시 출입문 취급방법",
+          "answer": "• 전부운전실 배전반 CrSN OFF로 출입문 닫고 CrSN ON 취급\n• 다음역에서 출입문 취급시 DOS 취급\n• DCS 폐문 취급(출입문 닫히지 않음)\n•    CrSN OFF(출입문 닫힘)후 ON 취급\n• CrSN OFF후 ON취급은 DROS 고착방향에 대해서만 취븍하고 고착되지 않은 방향은 정상 취급",
+          "hint": "전다DCC"
+        },
+        {
+          "id": "186",
+          "kind": "new",
+          "title": "DOOR등 소등원인",
+          "prompt": "186 DOOR등 소등원인",
+          "answer": "• 출입문이 1개 이상 열렸을 때\n• 출입문스취치(DS) 접점 불량\n• 전후 운전실 DILPN Trip시\n• 출입문 공기관 콕크 차단 및 이물질 끼임\n• DOOR등 전구 소손",
+          "hint": "출출전출D"
+        },
+        {
+          "id": "187",
+          "kind": "new",
+          "title": "DOS 고착시 회송운행 하지 않고 운행하는 방법",
+          "prompt": "187 DOS 고착시 회송운행 하지 않고 운행하는 방법",
+          "answer": "• 출입문 개문 시 CrSN 복귀, 폐문시 DCS 취급 후 CrSN 차단",
+          "hint": "출"
+        },
+        {
+          "id": "188",
+          "kind": "new",
+          "title": "PSD 열림불능시 기관사 조치사항",
+          "prompt": "188 PSD 열림불능시 기관사 조치사항",
+          "answer": "1. 안내방송 시행 후 관제사에게 PSD 장애 발생내용 보고\n2. 관계직원과 PSD 수동개방 취급\n3. 관계직원의 여객 승하차 이상 유무 통보받은 후 확인하고 인터록 무시 취급하여 전도운행",
+          "hint": "안관관"
+        },
+        {
+          "id": "189",
+          "kind": "new",
+          "title": "출입문 동작조건",
+          "prompt": "189 출입문 동작조건",
+          "answer": "1. 정차 후(ZVR여자)\n2. LSBS 취급시\n3. MC Key 취거 시\n4. BC핸들 취거(HCR, TCR 소자 시)",
+          "hint": "정LMB"
+        },
+        {
+          "id": "190",
+          "kind": "new",
+          "title": "출입문등 소등 원인",
+          "prompt": "190 출입문등 소등 원인",
+          "answer": "• DOOR등 전구 소손, DS접점 불량,. 전후부 DILPN 차단, 출입문 1개이상 열림,",
+          "hint": "D"
+        }
+      ]
+    </script>
+    <script>
+      "use strict";
+      const ALL_QUESTIONS = JSON.parse(
+        document.getElementById("question-data").textContent,
+      );
+      const OLD_QUESTIONS = ALL_QUESTIONS.filter((q) => q.kind === "old");
+      const NEW_QUESTIONS = ALL_QUESTIONS.filter((q) => q.kind === "new");
+      const $app = document.getElementById("app");
+      let view = "home";
+      let selectedMode = "all";
+      let settingsReturn = "home";
+      let settings = { showHint: true, answerFont: 15 };
+      let queue = [];
+      let currentIndex = 0;
+      let sessionResults = [];
+      let answerShown = false;
+      let hintVisible = false;
+      let selectedGrade = null;
+      let timeLeft = 60;
+      let timerId = null;
+      let detailIndex = 0;
+      let toastId = null;
+      let isRetrySession = false;
+
+      function escapeHTML(value) {
+        return String(value ?? "").replace(
+          /[&<>"']/g,
+          (ch) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[ch],
+        );
+      }
+      function shuffle(items) {
+        const arr = items.slice();
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+      function clearTimer() {
+        if (timerId !== null) window.clearInterval(timerId);
+        timerId = null;
+      }
+      function startTimer(reset = true) {
+        clearTimer();
+        if (reset) timeLeft = 60;
+        updateTimerUI();
+        if (answerShown || view !== "quiz") return;
+        timerId = window.setInterval(() => {
+          if (view !== "quiz" || answerShown) {
+            clearTimer();
+            return;
+          }
+          timeLeft = Math.max(0, timeLeft - 1);
+          updateTimerUI();
+          if (timeLeft <= 0) revealAnswer(true);
+        }, 1000);
+      }
+      function updateTimerUI() {
+        const number = document.getElementById("timer-number");
+        const ring = document.getElementById("timer-ring");
+        const progress = document.getElementById("timer-progress");
+        if (!number || !ring || !progress) return;
+        number.textContent = String(timeLeft);
+        ring.classList.toggle("urgent", timeLeft <= 10);
+        const circumference = 176;
+        progress.style.strokeDashoffset = String(
+          circumference * (1 - timeLeft / 60),
+        );
+      }
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+        if (toastId) clearTimeout(toastId);
+        toastId = setTimeout(() => toast.classList.remove("show"), 2100);
+      }
+      function itemCount(mode) {
+        if (mode === "old") return OLD_QUESTIONS.length;
+        if (mode === "new") return NEW_QUESTIONS.length;
+        return ALL_QUESTIONS.length;
+      }
+      function modeName(mode) {
+        return mode === "old" ? "구구술" : mode === "new" ? "신구술" : "종합";
+      }
+      function goHome() {
+        clearTimer();
+        view = "home";
+        render();
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      function selectMode(mode) {
+        selectedMode = mode;
+        view = "setup";
+        render();
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      function startQuiz(mode = selectedMode, customItems = null) {
+        clearTimer();
+        selectedMode = mode;
+        const bank =
+          customItems ||
+          (mode === "old"
+            ? OLD_QUESTIONS
+            : mode === "new"
+              ? NEW_QUESTIONS
+              : ALL_QUESTIONS);
+        queue = customItems ? bank.slice() : shuffle(bank).slice(0, 10);
+        currentIndex = 0;
+        sessionResults = [];
+        isRetrySession = Boolean(customItems);
+        view = "quiz";
+        loadQuestion();
+      }
+      function loadQuestion() {
+        clearTimer();
+        answerShown = false;
+        hintVisible = false;
+        selectedGrade = null;
+        timeLeft = 60;
+        view = "quiz";
+        render();
+        startTimer(true);
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      function revealAnswer(byTimeout = false) {
+        if (answerShown) return;
+        clearTimer();
+        answerShown = true;
+        if (byTimeout) timeLeft = 0;
+        render();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      function toggleHint() {
+        if (!settings.showHint) {
+          showToast("설정에서 힌트 보기를 켤 수 있어요.");
+          return;
+        }
+        hintVisible = !hintVisible;
+        render();
+        updateTimerUI();
+      }
+      function rateAnswer(grade) {
+        if (!answerShown) return;
+        selectedGrade = grade;
+        render();
+        updateTimerUI();
+      }
+      function nextQuestion() {
+        if (!answerShown || !selectedGrade) return;
+        const question = queue[currentIndex];
+        sessionResults[currentIndex] = {
+          item: question,
+          grade: selectedGrade,
+          timeUsed: 60 - timeLeft,
+        };
+        if (currentIndex + 1 < queue.length) {
+          currentIndex += 1;
+          loadQuestion();
+        } else {
+          clearTimer();
+          view = "results";
+          render();
+          window.scrollTo({ top: 0, behavior: "auto" });
+        }
+      }
+      function exitQuiz() {
+        if (confirm("진행 중인 퀴즈를 종료하고 처음 화면으로 돌아갈까요?"))
+          goHome();
+      }
+      function openSettings() {
+        settingsReturn = view;
+        if (view === "quiz") clearTimer();
+        view = "settings";
+        render();
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      function backFromSettings() {
+        view = settingsReturn || "home";
+        render();
+        if (view === "quiz" && !answerShown) startTimer(false);
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      function toggleHintSetting(checked) {
+        settings.showHint = checked;
+        render();
+      }
+      function setAnswerFont(size) {
+        settings.answerFont = size;
+        document.documentElement.style.setProperty(
+          "--answer-font",
+          size + "px",
+        );
+        render();
+      }
+      function openDetail(index) {
+        detailIndex = index;
+        view = "detail";
+        render();
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      function backToResults() {
+        view = "results";
+        render();
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      function startRetry() {
+        const missed = sessionResults
+          .filter((result) => result.grade !== "O")
+          .map((result) => result.item);
+        const selected = missed.length
+          ? missed
+          : sessionResults.map((result) => result.item);
+        startQuiz(selectedMode, selected);
+      }
+      function restartSameMode() {
+        startQuiz(selectedMode);
+      }
+      function countGrade(grade) {
+        return sessionResults.filter((result) => result.grade === grade).length;
+      }
+
+      const gearSVG =
+        '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.3M12 18.9v2.3M2.8 12h2.3M18.9 12h2.3M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7"/></svg>';
+      const bookSVG =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c2.7-.9 5.3-.5 8 1.1v13c-2.7-1.6-5.3-2-8-1.1z"/><path d="M20 5.5c-2.7-.9-5.3-.5-8 1.1v13c2.7-1.6 5.3-2 8-1.1z"/><path d="M12 6.6v13"/></svg>';
+      const docSVG =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12h6M9 15.5h6"/></svg>';
+      const starSVG =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>';
+      const arrowSVG =
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+      function renderHome() {
+        return `
+    <div class="topbar"><span></span><h2> </h2><button class="icon-btn" onclick="openSettings()" aria-label="설정">${gearSVG}</button></div>
+    <section class="hero">
+      <div class="hero-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5c2.8-1 5.3-.7 8 1.2 2.7-1.9 5.2-2.2 8-1.2v13c-2.8-1-5.3-.7-8 1.2-2.7-1.9-5.2-2.2-8-1.2z"/><path d="M12 6.7v13"/></svg></div>
+      <h1>구술 암기 퀴즈</h1>
+      <p>오늘도, 조금 더 기억할 수 있도록</p>
+    </section>
+    <section class="mode-list" aria-label="퀴즈 종류">
+      <button class="mode-card old" onclick="selectMode('old')"><span class="mode-icon">${bookSVG}</span><span class="mode-copy"><b>구구술</b><small>6.1 ~ 6.81 · ${OLD_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
+      <button class="mode-card new" onclick="selectMode('new')"><span class="mode-icon">${docSVG}</span><span class="mode-copy"><b>신구술</b><small>101 ~ 190 · ${NEW_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
+      <button class="mode-card all" onclick="selectMode('all')"><span class="mode-icon">${starSVG}</span><span class="mode-copy"><b>종합</b><small>구구술 + 신구술 · ${ALL_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
+    </section>
+    <section class="home-footer" aria-label="퀴즈 안내"><div class="feature"><strong>10문제</strong><span>한 게임 분량</span></div><div class="feature"><strong>60초</strong><span>문제별 제한 시간</span></div><div class="feature"><strong>앞글자</strong><span>힌트 제공</span></div></section>
+    <p class="small-note">문제 제목을 보고 소리 내어 답변한 뒤, 원문 정답을 확인하세요.</p>`;
+      }
+      function renderSetup() {
+        const mode = selectedMode;
+        return `
+    <div class="topbar"><button class="icon-btn back-btn" onclick="goHome()" aria-label="뒤로"></button><h2>${modeName(mode)}</h2><button class="icon-btn" onclick="openSettings()" aria-label="설정">${gearSVG}</button></div>
+    <div class="mode-summary"><h1>총 ${itemCount(mode)}문항</h1><p>${mode === "all" ? "구구술과 신구술이 섞여서 출제됩니다." : mode === "old" ? "6.1부터 6.81까지 구구술 문항입니다." : "101번부터 190번까지 신구술 문항입니다."}<br>한 게임에 무작위 10문제가 출제됩니다.</p></div>
+    <section class="panel setup-panel">
+      <h3 class="section-label">문제 설정</h3>
+      <div class="setting-line"><div><b>출제 방식</b><p>매 게임 문제 순서가 달라집니다.</p></div><span class="choice-chip active">랜덤</span></div>
+      <div class="setting-line"><div><b>제한 시간</b><p>시간이 끝나면 정답이 자동으로 표시됩니다.</p></div><span class="choice-chip active">1분</span></div>
+      <div class="setup-info"><span class="pill">✓ 중복 없이 10문제</span><span class="pill">✓ 앞글자 힌트</span></div>
+    </section>
+    <div class="action-area"><button class="primary-btn" onclick="startQuiz('${mode}')">시작하기&nbsp; ${arrowSVG}</button></div>
+    <p class="small-note">정답은 PDF 원문 표현을 기준으로 표시됩니다.</p>`;
+      }
+      function renderQuiz() {
+        const q = queue[currentIndex];
+        if (!q)
+          return '<div class="panel">문항을 불러오지 못했습니다. 처음 화면으로 돌아가 다시 시작해주세요.</div>';
+        const pct = Math.max(0, ((currentIndex + 1) / queue.length) * 100);
+        const status =
+          timeLeft <= 0
+            ? "시간이 종료되었습니다."
+            : "다음에 대한 개념을 설명해보세요.";
+        const hintBlock =
+          hintVisible && settings.showHint
+            ? `<section class="hint-panel"><span class="hint-lightbulb">💡</span><div class="hint-content"><b>힌트</b><p>${escapeHTML(q.hint || "힌트 없음")}</p></div><button class="hint-close" onclick="toggleHint()" aria-label="힌트 닫기">×</button></section>`
+            : "";
+        const answerBlock = answerShown
+          ? `
+    <section class="answer-panel"><div class="answer-head"><strong>정답 · 원문</strong><span class="answer-badge">전체 답변</span></div><div class="answer-text">${escapeHTML(q.answer)}</div></section>
+    <section class="self-grade"><h3 class="section-label">내 답변을 스스로 평가하세요</h3><div class="grade-grid">
+      <button class="grade-btn ${selectedGrade === "O" ? "selected" : ""}" data-grade="O" onclick="rateAnswer('O')"><span class="grade-symbol">○</span><b>완전암기</b><small>막힘없이 답변</small></button>
+      <button class="grade-btn ${selectedGrade === "△" ? "selected" : ""}" data-grade="△" onclick="rateAnswer('△')"><span class="grade-symbol">△</span><b>부분암기</b><small>일부가 헷갈림</small></button>
+      <button class="grade-btn ${selectedGrade === "X" ? "selected" : ""}" data-grade="X" onclick="rateAnswer('X')"><span class="grade-symbol">×</span><b>다시암기</b><small>답변이 어려움</small></button>
+    </div><p class="explain-note">본인이 실제로 말한 답변을 기준으로 선택해주세요.</p></section>`
+          : "";
+        return `
+    <div class="quiz-top"><button class="icon-btn" onclick="exitQuiz()" aria-label="퀴즈 종료">×</button><div class="quiz-count">${currentIndex + 1} / ${queue.length}</div><button class="icon-btn" onclick="openSettings()" aria-label="설정">${gearSVG}</button></div>
+    <div class="quiz-progress" aria-label="진행률"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+    <div class="timer-row"><div id="timer-ring" class="timer-ring ${timeLeft <= 10 ? "urgent" : ""}" aria-label="남은 시간 ${timeLeft}초"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="timer-track" cx="32" cy="32" r="28"/><circle id="timer-progress" class="timer-progress" cx="32" cy="32" r="28" style="stroke-dasharray:176;stroke-dashoffset:${176 * (1 - timeLeft / 60)}"/></svg><span id="timer-number" class="timer-number">${timeLeft}</span></div>
+      <button class="hint-btn" onclick="toggleHint()" ${!settings.showHint ? 'disabled title="설정에서 힌트를 켜세요"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M8.1 14.7a6 6 0 1 1 7.8 0c-.9.7-1.4 1.5-1.6 2.3H9.7c-.2-.8-.7-1.6-1.6-2.3Z"/></svg>힌트 보기</button></div>
+    <section class="prompt-wrap"><div class="question-tag">${escapeHTML(q.id)} · ${q.kind === "old" ? "구구술" : "신구술"}</div><h1>${escapeHTML(q.title)}</h1><p class="prompt-helper">${answerShown ? status : "질문을 보고 답변을 소리 내어 말해보세요."}</p></section>
+    ${hintBlock}
+    ${answerBlock}
+    <div class="action-area">${answerShown ? `<button class="primary-btn" onclick="nextQuestion()" ${!selectedGrade ? "disabled" : ""}>${currentIndex + 1 === queue.length ? "결과 확인" : "다음 문제"} &nbsp; ${arrowSVG}</button>` : `<button class="primary-btn" onclick="revealAnswer(false)">정답 확인하기</button>`}</div>
+    ${answerShown && !selectedGrade ? '<p class="explain-note">정답을 확인한 뒤 암기 정도를 선택하면 다음 문제로 넘어갈 수 있어요.</p>' : ""}`;
+      }
+      function renderResults() {
+        const total = sessionResults.length;
+        const good = countGrade("O"),
+          partial = countGrade("△"),
+          retry = countGrade("X");
+        const details = sessionResults
+          .map(
+            (r, i) => `
+    <button class="result-row" onclick="openDetail(${i})"><span class="result-index">${i + 1}</span><span class="row-question"><b>${escapeHTML(r.item.id)} ${escapeHTML(r.item.title)}</b><small>${r.grade === "O" ? "완전암기" : r.grade === "△" ? "부분암기" : "다시암기"}</small></span><span class="grade-mini ${r.grade}">${r.grade === "X" ? "×" : r.grade}</span><span class="row-chevron">›</span></button>`,
+          )
+          .join("");
+        const allO = good === total;
+        return `
+    <div class="topbar"><button class="icon-btn back-btn" onclick="goHome()" aria-label="처음 화면"></button><h2>학습 결과</h2><button class="icon-btn" onclick="openSettings()" aria-label="설정">${gearSVG}</button></div>
+    <section class="result-hero"><span class="success-icon">✓</span><h1>${allO ? "훌륭해요!" : "학습을 완료했어요"}</h1><p>${modeName(selectedMode)} · ${total}문제 학습 완료<br>스스로 평가한 암기 상태를 확인해보세요.</p></section>
+    <section class="summary-grid"><div class="summary-stat good"><span class="num">${good}</span><b>완전암기</b><small>바로 답변 가능</small></div><div class="summary-stat partial"><span class="num">${partial}</span><b>부분암기</b><small>한 번 더 복습</small></div><div class="summary-stat retry"><span class="num">${retry}</span><b>다시암기</b><small>반복 학습 추천</small></div></section>
+    <div class="list-heading"><b>문제별 결과</b><span>${total}문항</span></div>
+    <section class="result-list">${details}</section>
+    <div class="result-actions"><button class="primary-btn" onclick="startRetry()">${retry + partial ? "다시암기 문항 복습하기" : "이번 문항 다시 풀기"}</button><button class="secondary-btn" onclick="restartSameMode()">같은 유형으로 새 퀴즈</button><button class="secondary-btn" onclick="goHome()">처음으로</button></div>`;
+      }
+      function renderDetail() {
+        const result = sessionResults[detailIndex];
+        if (!result)
+          return `<div class="topbar"><button class="icon-btn back-btn" onclick="backToResults()" aria-label="결과"></button><h2>결과 상세</h2><span></span></div>`;
+        const gradeLabel =
+          result.grade === "O"
+            ? "완전암기"
+            : result.grade === "△"
+              ? "부분암기"
+              : "다시암기";
+        const gradeSymbol = result.grade === "X" ? "×" : result.grade;
+        return `
+    <div class="topbar"><button class="icon-btn back-btn" onclick="backToResults()" aria-label="결과 목록"></button><h2>결과 상세</h2><button class="icon-btn" onclick="backToResults()" aria-label="닫기">×</button></div>
+    <div class="detail-title"><div class="question-tag">${escapeHTML(result.item.id)} · ${detailIndex + 1}/${sessionResults.length}</div><h1>${escapeHTML(result.item.title)}</h1><p><strong class="grade-mini ${result.grade}" style="font-size:16px">${gradeSymbol}</strong> ${gradeLabel}</p></div>
+    <section class="answer-panel"><div class="answer-head"><strong>정답 · 원문</strong><span class="answer-badge">전체 답변</span></div><div class="answer-text">${escapeHTML(result.item.answer)}</div></section>
+    <div class="result-actions"><button class="primary-btn" onclick="${detailIndex + 1 < sessionResults.length ? "detailIndex++;render();window.scrollTo({top:0,behavior:'smooth'})" : "backToResults()"}">${detailIndex + 1 < sessionResults.length ? "다음 결과" : "결과 목록으로 돌아가기"}</button><button class="secondary-btn" onclick="${detailIndex > 0 ? "detailIndex--;render();window.scrollTo({top:0,behavior:'smooth'})" : "backToResults()"}">${detailIndex > 0 ? "이전 결과" : "결과 목록"}</button></div>`;
+      }
+      function renderSettings() {
+        return `
+    <div class="topbar"><button class="icon-btn back-btn" onclick="backFromSettings()" aria-label="뒤로"></button><h2>설정</h2><span></span></div>
+    <section class="panel settings-section"><h3>문제 설정</h3>
+      <div class="preference"><div class="pref-copy"><b>출제 방식</b><p>매 게임마다 무작위 10문제 출제</p></div><span class="choice-chip active">랜덤</span></div>
+      <div class="preference"><div class="pref-copy"><b>제한 시간</b><p>문제당 60초 · 종료 시 자동 정답 표시</p></div><span class="choice-chip active">1분</span></div>
+      <div class="preference"><div class="pref-copy"><b>힌트 보기</b><p>답변 항목의 첫 글자만 표시합니다.</p></div><input class="toggle" type="checkbox" ${settings.showHint ? "checked" : ""} onchange="toggleHintSetting(this.checked)" aria-label="힌트 보기"></div>
+    </section>
+    <section class="panel settings-section"><h3>읽기 설정</h3>
+      <div class="preference"><div class="pref-copy"><b>정답 글자 크기</b><p>긴 답변을 편하게 확인할 수 있어요.</p></div><div class="font-choices"><button class="${settings.answerFont === 14 ? "active" : ""}" onclick="setAnswerFont(14)">보통</button><button class="${settings.answerFont === 16 ? "active" : ""}" onclick="setAnswerFont(16)">크게</button><button class="${settings.answerFont === 18 ? "active" : ""}" onclick="setAnswerFont(18)">더 크게</button></div></div>
+    </section>
+    <p class="inline-info">문항과 정답은 제공된 PDF를 바탕으로 구성했습니다. 참고·당구장 표시를 포함한 답변 원문 전체가 표시되며, 힌트에서는 구분어와 참고 문구를 제외합니다.</p>
+    <div class="action-area"><button class="primary-btn" onclick="backFromSettings()">설정 완료</button></div>`;
+      }
+      function render() {
+        document.documentElement.style.setProperty(
+          "--answer-font",
+          settings.answerFont + "px",
+        );
+        const pages = {
+          home: renderHome,
+          setup: renderSetup,
+          quiz: renderQuiz,
+          results: renderResults,
+          detail: renderDetail,
+          settings: renderSettings,
+        };
+        $app.innerHTML = (pages[view] || renderHome)();
+        updateTimerUI();
+      }
+      render();
+    </script>
+  </body>
+</html>
