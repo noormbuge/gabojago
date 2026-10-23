@@ -1487,7 +1487,7 @@ function itemCount(mode) {
   return ALL_QUESTIONS.length;
 }
 function modeName(mode) {
-  return mode === "old" ? "구구술" : mode === "new" ? "신구술" : "종합";
+  return mode === "old" ? "(구) 구술" : mode === "new" ? "(신) 구술" : "종합";
 }
 function goHome() {
   clearTimer();
@@ -1791,7 +1791,7 @@ function countGrade(grade) {
 }
 
 const gearSVG =
-  '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.3M12 18.9v2.3M2.8 12h2.3M18.9 12h2.3M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7"/></svg>';
+  '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" style="filter:drop-shadow(0 1px 1.5px rgba(28,43,64,0.18))"><defs><linearGradient id="iosGearBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b4c0cf"/><stop offset="48%" stop-color="#8795a7"/><stop offset="100%" stop-color="#5e6c7e"/></linearGradient><linearGradient id="iosGearInner" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#697789"/><stop offset="100%" stop-color="#9aa7b8"/></linearGradient></defs><path fill="url(#iosGearBody)" fill-rule="evenodd" stroke="#536173" stroke-width="0.6" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1ZM12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><circle cx="12" cy="12" r="5.4" fill="none" stroke="url(#iosGearInner)" stroke-width="1.1" opacity="0.85"/><circle cx="12" cy="12" r="3.3" fill="none" stroke="#dce4ee" stroke-width="0.6" opacity="0.7"/></svg>';
 const bookSVG =
   '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c2.7-.9 5.3-.5 8 1.1v13c-2.7-1.6-5.3-2-8-1.1z"/><path d="M20 5.5c-2.7-.9-5.3-.5-8 1.1v13c2.7-1.6 5.3-2 8-1.1z"/><path d="M12 6.6v13"/></svg>';
 const docSVG =
@@ -1809,12 +1809,11 @@ function renderHome() {
     <section class="hero">
       <div class="hero-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5c2.8-1 5.3-.7 8 1.2 2.7-1.9 5.2-2.2 8-1.2v13c-2.8-1-5.3-.7-8 1.2-2.7-1.9-5.2-2.2-8-1.2z"/><path d="M12 6.7v13"/></svg></div>
       <h1>구술 암기 퀴즈</h1>
-      <p>오늘도, 조금 더 기억할 수 있도록</p>
     </section>
     <section class="mode-list" aria-label="퀴즈 종류">
-      <button class="mode-card old" onclick="selectMode('old')"><span class="mode-icon">${bookSVG}</span><span class="mode-copy"><b>구구술</b><small>6.1 ~ 6.81 · ${OLD_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
-      <button class="mode-card new" onclick="selectMode('new')"><span class="mode-icon">${docSVG}</span><span class="mode-copy"><b>신구술</b><small>101 ~ 190 · ${NEW_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
-      <button class="mode-card all" onclick="selectMode('all')"><span class="mode-icon">${starSVG}</span><span class="mode-copy"><b>종합</b><small>구구술 + 신구술 · ${ALL_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
+      <button class="mode-card old" onclick="selectMode('old')"><span class="mode-icon">${bookSVG}</span><span class="mode-copy"><b>(구) 구술</b><small>6.1 ~ 6.81 · ${OLD_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
+      <button class="mode-card new" onclick="selectMode('new')"><span class="mode-icon">${docSVG}</span><span class="mode-copy"><b>(신) 구술</b><small>101 ~ 190 · ${NEW_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
+      <button class="mode-card all" onclick="selectMode('all')"><span class="mode-icon">${starSVG}</span><span class="mode-copy"><b>종합</b><small>(구) 구술 + (신) 구술 · ${ALL_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
     </section>
     <section class="home-footer" aria-label="퀴즈 안내"><div class="feature"><strong>${settings.questionCount}문제</strong><span>한 게임 분량</span></div><div class="feature"><strong>${timeText}</strong><span>문제별 제한 시간</span></div><div class="feature"><strong>앞글자</strong><span>힌트 제공</span></div></section>
     <p class="small-note">문제 제목을 보고 소리 내어 답변한 뒤, 원문 정답을 확인하세요.</p>`;
@@ -1825,7 +1824,7 @@ function renderSetup() {
   const actualCount = Math.min(settings.questionCount, maxCount);
   return `
     <div class="topbar"><button class="icon-btn back-btn" onclick="goHome()" aria-label="뒤로"></button><h2>${modeName(mode)}</h2><button class="icon-btn" onclick="openSettings()" aria-label="설정">${gearSVG}</button></div>
-    <div class="mode-summary"><h1>총 ${maxCount}문항</h1><p>${mode === "all" ? "구구술과 신구술이 섞여서 출제됩니다." : mode === "old" ? "6.1부터 6.81까지 구구술 문항입니다." : "101번부터 190번까지 신구술 문항입니다."}<br>한 게임에 무작위 <span id="setup-actual-count">${actualCount}</span>문제가 출제됩니다.</p></div>
+    <div class="mode-summary"><h1>총 ${maxCount}문항</h1><p>${mode === "all" ? "(구) 구술과 (신) 구술이 섞여서 출제됩니다." : mode === "old" ? "6.1부터 6.81까지 (구) 구술 문항입니다." : "101번부터 190번까지 (신) 구술 문항입니다."}<br>한 게임에 무작위 <span id="setup-actual-count">${actualCount}</span>문제가 출제됩니다.</p></div>
     <section class="panel setup-panel">
       <h3 class="section-label">문제 설정</h3>
       <div class="setting-line"><div><b>출제 방식</b><p>매 게임 문제 순서가 달라집니다.</p></div><span class="choice-chip active">랜덤</span></div>
@@ -1864,7 +1863,7 @@ function renderQuiz() {
     <div class="quiz-progress" aria-label="진행률"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
     <div class="timer-row"><div id="timer-ring" class="timer-ring ${timeLeft <= 10 ? "urgent" : ""}" aria-label="남은 시간 ${timeLeft}초"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="timer-track" cx="32" cy="32" r="28"/><circle id="timer-progress" class="timer-progress" cx="32" cy="32" r="28" style="stroke-dasharray:176;stroke-dashoffset:${176 * (1 - Math.min(1, timeLeft / totalTime))}"/></svg><span id="timer-number" class="timer-number">${timeLeft}</span></div>
       <button class="hint-btn" onclick="toggleHint()" ${!settings.showHint ? 'disabled title="설정에서 힌트를 켜세요"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M8.1 14.7a6 6 0 1 1 7.8 0c-.9.7-1.4 1.5-1.6 2.3H9.7c-.2-.8-.7-1.6-1.6-2.3Z"/></svg>힌트 보기</button></div>
-    <section class="prompt-wrap"><div class="question-tag">${escapeHTML(q.id)} · ${q.kind === "old" ? "구구술" : "신구술"}</div><h1>${escapeHTML(q.title)}</h1><p class="prompt-helper">${answerShown ? status : "질문을 보고 답변을 소리 내어 말해보세요."}</p></section>
+    <section class="prompt-wrap"><div class="question-tag">${escapeHTML(q.id)} · ${q.kind === "old" ? "(구) 구술" : "(신) 구술"}</div><h1>${escapeHTML(q.title)}</h1><p class="prompt-helper">${answerShown ? status : "질문을 보고 답변을 소리 내어 말해보세요."}</p></section>
     ${hintBlock}
     ${answerBlock}
     <div class="action-area">${answerShown ? `<button class="primary-btn" onclick="nextQuestion()" ${!selectedGrade ? "disabled" : ""}>${currentIndex + 1 === queue.length ? "결과 확인" : "다음 문제"} &nbsp; ${arrowSVG}</button>` : `<button class="primary-btn" onclick="revealAnswer(false)">정답 확인하기</button>`}</div>
