@@ -1373,22 +1373,53 @@ const ALL_QUESTIONS = [
 const OLD_QUESTIONS = ALL_QUESTIONS.filter((q) => q.kind === "old");
 const NEW_QUESTIONS = ALL_QUESTIONS.filter((q) => q.kind === "new");
 const $app = document.getElementById("app");
+const DIAL_ITEM_HEIGHT = 36;
+const QUESTION_COUNT_OPTIONS = [
+  ...Array.from({ length: 50 }, (_, i) => i + 1),
+  60,
+  70,
+  80,
+  90,
+  100,
+  120,
+  150,
+  ALL_QUESTIONS.length,
+];
+const TIME_LIMIT_OPTIONS = [
+  10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
+  105, 110, 115, 120, 150, 180, 240, 300,
+];
 let view = "home";
 let selectedMode = "all";
 let settingsReturn = "home";
-let settings = { showHint: true, answerFont: 15 };
+let settings = {
+  questionCount: 10,
+  timeLimit: 60,
+  showHint: true,
+  answerFont: 15,
+};
 let queue = [];
 let currentIndex = 0;
 let sessionResults = [];
 let answerShown = false;
 let hintVisible = false;
 let selectedGrade = null;
-let timeLeft = 60;
+let timeLeft = settings.timeLimit;
 let timerId = null;
 let detailIndex = 0;
 let toastId = null;
 let isRetrySession = false;
 
+function formatTimeDial(sec) {
+  if (sec < 60) return `${sec}초`;
+  if (sec % 60 === 0) return `${sec / 60}분 (${sec}초)`;
+  return `${Math.floor(sec / 60)}분 ${sec % 60}초`;
+}
+function formatTimeShort(sec) {
+  if (sec < 60) return `${sec}초`;
+  if (sec % 60 === 0) return `${sec / 60}분`;
+  return `${Math.floor(sec / 60)}분 ${sec % 60}초`;
+}
 function escapeHTML(value) {
   return String(value ?? "").replace(
     /[&<>"']/g,
@@ -1416,7 +1447,8 @@ function clearTimer() {
 }
 function startTimer(reset = true) {
   clearTimer();
-  if (reset) timeLeft = 60;
+  if (reset) timeLeft = settings.timeLimit;
+  else timeLeft = Math.min(timeLeft, settings.timeLimit);
   updateTimerUI();
   if (answerShown || view !== "quiz") return;
   timerId = window.setInterval(() => {
@@ -1437,8 +1469,9 @@ function updateTimerUI() {
   number.textContent = String(timeLeft);
   ring.classList.toggle("urgent", timeLeft <= 10);
   const circumference = 176;
+  const totalTime = Math.max(1, settings.timeLimit);
   progress.style.strokeDashoffset = String(
-    circumference * (1 - timeLeft / 60),
+    circumference * (1 - Math.min(1, timeLeft / totalTime)),
   );
 }
 function showToast(message) {
@@ -1458,11 +1491,13 @@ function modeName(mode) {
 }
 function goHome() {
   clearTimer();
+  activeDial = null;
   view = "home";
   render();
   window.scrollTo({ top: 0, behavior: "auto" });
 }
 function selectMode(mode) {
+  activeDial = null;
   selectedMode = mode;
   view = "setup";
   render();
@@ -1470,6 +1505,7 @@ function selectMode(mode) {
 }
 function startQuiz(mode = selectedMode, customItems = null) {
   clearTimer();
+  activeDial = null;
   selectedMode = mode;
   const bank =
     customItems ||
@@ -1478,7 +1514,9 @@ function startQuiz(mode = selectedMode, customItems = null) {
       : mode === "new"
         ? NEW_QUESTIONS
         : ALL_QUESTIONS);
-  queue = customItems ? bank.slice() : shuffle(bank).slice(0, 10);
+  queue = customItems
+    ? bank.slice()
+    : shuffle(bank).slice(0, settings.questionCount);
   currentIndex = 0;
   sessionResults = [];
   isRetrySession = Boolean(customItems);
@@ -1490,7 +1528,7 @@ function loadQuestion() {
   answerShown = false;
   hintVisible = false;
   selectedGrade = null;
-  timeLeft = 60;
+  timeLeft = settings.timeLimit;
   view = "quiz";
   render();
   startTimer(true);
@@ -1525,7 +1563,7 @@ function nextQuestion() {
   sessionResults[currentIndex] = {
     item: question,
     grade: selectedGrade,
-    timeUsed: 60 - timeLeft,
+    timeUsed: Math.max(0, settings.timeLimit - timeLeft),
   };
   if (currentIndex + 1 < queue.length) {
     currentIndex += 1;
@@ -1542,6 +1580,7 @@ function exitQuiz() {
     goHome();
 }
 function openSettings() {
+  activeDial = null;
   settingsReturn = view;
   if (view === "quiz") clearTimer();
   view = "settings";
@@ -1549,6 +1588,7 @@ function openSettings() {
   window.scrollTo({ top: 0, behavior: "auto" });
 }
 function backFromSettings() {
+  activeDial = null;
   view = settingsReturn || "home";
   render();
   if (view === "quiz" && !answerShown) startTimer(false);
@@ -1565,6 +1605,163 @@ function setAnswerFont(size) {
     size + "px",
   );
   render();
+}
+let activeDial = null;
+
+function closeDial() {
+  if (!activeDial) return;
+  activeDial = null;
+  document.querySelectorAll(".dial-popover").forEach((el) => el.remove());
+  document
+    .querySelectorAll(".dial-trigger")
+    .forEach((el) => el.setAttribute("aria-expanded", "false"));
+}
+function toggleDial(kind, event) {
+  if (event) event.stopPropagation();
+  if (activeDial === kind) {
+    closeDial();
+    return;
+  }
+  activeDial = kind;
+  render();
+}
+function onDialItemClick(trackId, index, event) {
+  if (event) event.stopPropagation();
+  const track = document.getElementById(trackId);
+  if (!track || track.dataset.dragged === "1") return;
+  const currentIdx = Math.round(track.scrollTop / DIAL_ITEM_HEIGHT);
+  if (currentIdx === index) {
+    closeDial();
+  } else {
+    track.scrollTo({ top: index * DIAL_ITEM_HEIGHT, behavior: "smooth" });
+  }
+}
+function bindDialPicker(trackId, options, currentValue, onChange) {
+  const track = document.getElementById(trackId);
+  if (!track) return;
+  const items = Array.from(track.querySelectorAll(".dial-item"));
+  const initialIndex = Math.max(0, options.indexOf(currentValue));
+  track.scrollTop = initialIndex * DIAL_ITEM_HEIGHT;
+
+  const syncSelection = () => {
+    const idx = Math.max(
+      0,
+      Math.min(
+        options.length - 1,
+        Math.round(track.scrollTop / DIAL_ITEM_HEIGHT),
+      ),
+    );
+    items.forEach((el, i) => el.classList.toggle("active", i === idx));
+    const val = options[idx];
+    onChange(val);
+  };
+
+  track.addEventListener("scroll", syncSelection, { passive: true });
+
+  let isDown = false;
+  let startY = 0;
+  let startScrollTop = 0;
+  let moved = false;
+
+  track.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "touch") return;
+    isDown = true;
+    moved = false;
+    track.dataset.dragged = "0";
+    startY = e.clientY;
+    startScrollTop = track.scrollTop;
+  });
+  track.addEventListener("pointermove", (e) => {
+    if (!isDown) return;
+    const dy = e.clientY - startY;
+    if (!moved && Math.abs(dy) > 4) {
+      moved = true;
+      track.dataset.dragged = "1";
+      track.style.scrollSnapType = "none";
+      track.setPointerCapture(e.pointerId);
+    }
+    if (moved) {
+      track.scrollTop = startScrollTop - dy;
+    }
+  });
+  const endDrag = (e) => {
+    if (!isDown) return;
+    isDown = false;
+    if (moved) {
+      if (track.hasPointerCapture(e.pointerId)) {
+        track.releasePointerCapture(e.pointerId);
+      }
+      track.style.scrollSnapType = "y mandatory";
+      const idx = Math.max(
+        0,
+        Math.min(
+          options.length - 1,
+          Math.round(track.scrollTop / DIAL_ITEM_HEIGHT),
+        ),
+      );
+      track.scrollTo({ top: idx * DIAL_ITEM_HEIGHT, behavior: "smooth" });
+      setTimeout(() => {
+        track.dataset.dragged = "0";
+      }, 80);
+    }
+  };
+  track.addEventListener("pointerup", endDrag);
+  track.addEventListener("pointercancel", endDrag);
+}
+function initSettingsDials() {
+  bindDialPicker(
+    "dial-qcount-track",
+    QUESTION_COUNT_OPTIONS,
+    settings.questionCount,
+    (val) => {
+      settings.questionCount = val;
+      const trigger = document.getElementById("dial-trigger-qcount");
+      if (trigger) trigger.textContent = `${val}개`;
+      const desc = document.getElementById("pref-qcount-desc");
+      if (desc) desc.textContent = `매 게임마다 무작위 ${val}문제 출제`;
+      const setupCount = document.getElementById("setup-actual-count");
+      const setupPill = document.getElementById("setup-count-pill");
+      if (setupCount || setupPill) {
+        const actual = Math.min(val, itemCount(selectedMode));
+        if (setupCount) setupCount.textContent = String(actual);
+        if (setupPill) setupPill.textContent = `✓ 중복 없이 ${actual}문제`;
+      }
+    },
+  );
+  bindDialPicker(
+    "dial-time-track",
+    TIME_LIMIT_OPTIONS,
+    settings.timeLimit,
+    (val) => {
+      settings.timeLimit = val;
+      const trigger = document.getElementById("dial-trigger-time");
+      if (trigger) trigger.textContent = formatTimeShort(val);
+      const desc = document.getElementById("pref-time-desc");
+      if (desc)
+        desc.textContent = `문제당 ${val}초 · 종료 시 자동 정답 표시`;
+    },
+  );
+}
+document.addEventListener("pointerdown", (e) => {
+  if (!activeDial) return;
+  if (e.target.closest(".dial-anchor")) return;
+  closeDial();
+});
+function renderDialAnchor(kind) {
+  if (kind === "qcount") {
+    const isOpen = activeDial === "qcount";
+    const items = QUESTION_COUNT_OPTIONS.map(
+      (n, idx) =>
+        `<button type="button" class="dial-item ${n === settings.questionCount ? "active" : ""}" onclick="onDialItemClick('dial-qcount-track', ${idx}, event)">${n}개</button>`,
+    ).join("");
+    return `<div class="dial-anchor"><button id="dial-trigger-qcount" type="button" class="choice-chip active dial-trigger" onclick="toggleDial('qcount', event)" aria-expanded="${isOpen}">${settings.questionCount}개</button>${isOpen ? `<div class="dial-popover" role="listbox" aria-label="문제 수 선택"><div class="dial-highlight"></div><div id="dial-qcount-track" class="dial-track"><div class="dial-spacer"></div>${items}<div class="dial-spacer"></div></div></div>` : ""}</div>`;
+  }
+  const isOpen = activeDial === "time";
+  const items = TIME_LIMIT_OPTIONS.map(
+    (t, idx) =>
+      `<button type="button" class="dial-item ${t === settings.timeLimit ? "active" : ""}" onclick="onDialItemClick('dial-time-track', ${idx}, event)">${formatTimeDial(t)}</button>`,
+  ).join("");
+  return `<div class="dial-anchor"><button id="dial-trigger-time" type="button" class="choice-chip active dial-trigger" onclick="toggleDial('time', event)" aria-expanded="${isOpen}">${formatTimeShort(settings.timeLimit)}</button>${isOpen ? `<div class="dial-popover" role="listbox" aria-label="제한 시간 선택"><div class="dial-highlight"></div><div id="dial-time-track" class="dial-track"><div class="dial-spacer"></div>${items}<div class="dial-spacer"></div></div></div>` : ""}</div>`;
 }
 function openDetail(index) {
   detailIndex = index;
@@ -1605,6 +1802,8 @@ const arrowSVG =
   '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
 function renderHome() {
+  const timeText =
+    settings.timeLimit === 60 ? "60초" : formatTimeShort(settings.timeLimit);
   return `
     <div class="topbar"><span></span><h2> </h2><button class="icon-btn" onclick="openSettings()" aria-label="설정">${gearSVG}</button></div>
     <section class="hero">
@@ -1617,19 +1816,22 @@ function renderHome() {
       <button class="mode-card new" onclick="selectMode('new')"><span class="mode-icon">${docSVG}</span><span class="mode-copy"><b>신구술</b><small>101 ~ 190 · ${NEW_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
       <button class="mode-card all" onclick="selectMode('all')"><span class="mode-icon">${starSVG}</span><span class="mode-copy"><b>종합</b><small>구구술 + 신구술 · ${ALL_QUESTIONS.length}개 문항</small></span><span class="card-chevron">›</span></button>
     </section>
-    <section class="home-footer" aria-label="퀴즈 안내"><div class="feature"><strong>10문제</strong><span>한 게임 분량</span></div><div class="feature"><strong>60초</strong><span>문제별 제한 시간</span></div><div class="feature"><strong>앞글자</strong><span>힌트 제공</span></div></section>
+    <section class="home-footer" aria-label="퀴즈 안내"><div class="feature"><strong>${settings.questionCount}문제</strong><span>한 게임 분량</span></div><div class="feature"><strong>${timeText}</strong><span>문제별 제한 시간</span></div><div class="feature"><strong>앞글자</strong><span>힌트 제공</span></div></section>
     <p class="small-note">문제 제목을 보고 소리 내어 답변한 뒤, 원문 정답을 확인하세요.</p>`;
 }
 function renderSetup() {
   const mode = selectedMode;
+  const maxCount = itemCount(mode);
+  const actualCount = Math.min(settings.questionCount, maxCount);
   return `
     <div class="topbar"><button class="icon-btn back-btn" onclick="goHome()" aria-label="뒤로"></button><h2>${modeName(mode)}</h2><button class="icon-btn" onclick="openSettings()" aria-label="설정">${gearSVG}</button></div>
-    <div class="mode-summary"><h1>총 ${itemCount(mode)}문항</h1><p>${mode === "all" ? "구구술과 신구술이 섞여서 출제됩니다." : mode === "old" ? "6.1부터 6.81까지 구구술 문항입니다." : "101번부터 190번까지 신구술 문항입니다."}<br>한 게임에 무작위 10문제가 출제됩니다.</p></div>
+    <div class="mode-summary"><h1>총 ${maxCount}문항</h1><p>${mode === "all" ? "구구술과 신구술이 섞여서 출제됩니다." : mode === "old" ? "6.1부터 6.81까지 구구술 문항입니다." : "101번부터 190번까지 신구술 문항입니다."}<br>한 게임에 무작위 <span id="setup-actual-count">${actualCount}</span>문제가 출제됩니다.</p></div>
     <section class="panel setup-panel">
       <h3 class="section-label">문제 설정</h3>
       <div class="setting-line"><div><b>출제 방식</b><p>매 게임 문제 순서가 달라집니다.</p></div><span class="choice-chip active">랜덤</span></div>
-      <div class="setting-line"><div><b>제한 시간</b><p>시간이 끝나면 정답이 자동으로 표시됩니다.</p></div><span class="choice-chip active">1분</span></div>
-      <div class="setup-info"><span class="pill">✓ 중복 없이 10문제</span><span class="pill">✓ 앞글자 힌트</span></div>
+      <div class="setting-line"><div><b>문제 수</b><p id="pref-qcount-desc">매 게임마다 무작위 ${settings.questionCount}문제 출제</p></div>${renderDialAnchor("qcount")}</div>
+      <div class="setting-line"><div><b>제한 시간</b><p id="pref-time-desc">문제당 ${settings.timeLimit}초 · 종료 시 자동 정답 표시</p></div>${renderDialAnchor("time")}</div>
+      <div class="setup-info"><span id="setup-count-pill" class="pill">✓ 중복 없이 ${actualCount}문제</span><span class="pill">✓ 앞글자 힌트</span></div>
     </section>
     <div class="action-area"><button class="primary-btn" onclick="startQuiz('${mode}')">시작하기&nbsp; ${arrowSVG}</button></div>
     <p class="small-note">정답은 PDF 원문 표현을 기준으로 표시됩니다.</p>`;
@@ -1656,10 +1858,11 @@ function renderQuiz() {
       <button class="grade-btn ${selectedGrade === "X" ? "selected" : ""}" data-grade="X" onclick="rateAnswer('X')"><span class="grade-symbol">×</span><b>다시암기</b><small>답변이 어려움</small></button>
     </div><p class="explain-note">본인이 실제로 말한 답변을 기준으로 선택해주세요.</p></section>`
     : "";
+  const totalTime = Math.max(1, settings.timeLimit);
   return `
     <div class="quiz-top"><button class="icon-btn" onclick="exitQuiz()" aria-label="퀴즈 종료">×</button><div class="quiz-count">${currentIndex + 1} / ${queue.length}</div><button class="icon-btn" onclick="openSettings()" aria-label="설정">${gearSVG}</button></div>
     <div class="quiz-progress" aria-label="진행률"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
-    <div class="timer-row"><div id="timer-ring" class="timer-ring ${timeLeft <= 10 ? "urgent" : ""}" aria-label="남은 시간 ${timeLeft}초"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="timer-track" cx="32" cy="32" r="28"/><circle id="timer-progress" class="timer-progress" cx="32" cy="32" r="28" style="stroke-dasharray:176;stroke-dashoffset:${176 * (1 - timeLeft / 60)}"/></svg><span id="timer-number" class="timer-number">${timeLeft}</span></div>
+    <div class="timer-row"><div id="timer-ring" class="timer-ring ${timeLeft <= 10 ? "urgent" : ""}" aria-label="남은 시간 ${timeLeft}초"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="timer-track" cx="32" cy="32" r="28"/><circle id="timer-progress" class="timer-progress" cx="32" cy="32" r="28" style="stroke-dasharray:176;stroke-dashoffset:${176 * (1 - Math.min(1, timeLeft / totalTime))}"/></svg><span id="timer-number" class="timer-number">${timeLeft}</span></div>
       <button class="hint-btn" onclick="toggleHint()" ${!settings.showHint ? 'disabled title="설정에서 힌트를 켜세요"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M8.1 14.7a6 6 0 1 1 7.8 0c-.9.7-1.4 1.5-1.6 2.3H9.7c-.2-.8-.7-1.6-1.6-2.3Z"/></svg>힌트 보기</button></div>
     <section class="prompt-wrap"><div class="question-tag">${escapeHTML(q.id)} · ${q.kind === "old" ? "구구술" : "신구술"}</div><h1>${escapeHTML(q.title)}</h1><p class="prompt-helper">${answerShown ? status : "질문을 보고 답변을 소리 내어 말해보세요."}</p></section>
     ${hintBlock}
@@ -1708,8 +1911,9 @@ function renderSettings() {
   return `
     <div class="topbar"><button class="icon-btn back-btn" onclick="backFromSettings()" aria-label="뒤로"></button><h2>설정</h2><span></span></div>
     <section class="panel settings-section"><h3>문제 설정</h3>
-      <div class="preference"><div class="pref-copy"><b>출제 방식</b><p>매 게임마다 무작위 10문제 출제</p></div><span class="choice-chip active">랜덤</span></div>
-      <div class="preference"><div class="pref-copy"><b>제한 시간</b><p>문제당 60초 · 종료 시 자동 정답 표시</p></div><span class="choice-chip active">1분</span></div>
+      <div class="preference"><div class="pref-copy"><b>출제 방식</b><p>매 게임마다 문제가 무작위로 출제됩니다.</p></div><span class="choice-chip active">랜덤</span></div>
+      <div class="preference"><div class="pref-copy"><b>문제 수</b><p id="pref-qcount-desc">매 게임마다 무작위 ${settings.questionCount}문제 출제</p></div>${renderDialAnchor("qcount")}</div>
+      <div class="preference"><div class="pref-copy"><b>제한 시간</b><p id="pref-time-desc">문제당 ${settings.timeLimit}초 · 종료 시 자동 정답 표시</p></div>${renderDialAnchor("time")}</div>
       <div class="preference"><div class="pref-copy"><b>힌트 보기</b><p>답변 항목의 첫 글자만 표시합니다.</p></div><input class="toggle" type="checkbox" ${settings.showHint ? "checked" : ""} onchange="toggleHintSetting(this.checked)" aria-label="힌트 보기"></div>
     </section>
     <section class="panel settings-section"><h3>읽기 설정</h3>
@@ -1732,6 +1936,7 @@ function render() {
     settings: renderSettings,
   };
   $app.innerHTML = (pages[view] || renderHome)();
+  if (activeDial) initSettingsDials();
   updateTimerUI();
 }
 render();
