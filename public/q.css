@@ -239,6 +239,14 @@ button {
   );
   border-color: #e8ddff;
 }
+.mode-card.seventh {
+  background: linear-gradient(
+    110deg,
+    rgba(255, 245, 232, 0.88),
+    rgba(255, 255, 255, 0.95)
+  );
+  border-color: #f5dfc5;
+}
 .mode-icon {
   width: 45px;
   height: 45px;
@@ -258,6 +266,10 @@ button {
 .all .mode-icon {
   color: var(--purple);
   background: #ece3ff;
+}
+.seventh .mode-icon {
+  color: var(--amber);
+  background: var(--amber-soft);
 }
 .mode-icon svg {
   width: 22px;
@@ -295,6 +307,9 @@ button {
 }
 .all .card-chevron {
   color: var(--purple);
+}
+.seventh .card-chevron {
+  color: var(--amber);
 }
 .home-footer {
   display: grid;
@@ -719,7 +734,7 @@ button {
   background: #e3f6ef;
   color: #19a878;
 }
-.grade-btn[data-grade="△"] .grade-symbol {
+.grade-btn[data-grade="partial"] .grade-symbol {
   background: #fff2df;
   color: #ed9a36;
 }
@@ -731,7 +746,7 @@ button {
   background: #f0fbf6;
   border-color: #63d6ab;
 }
-.grade-btn.selected[data-grade="△"] {
+.grade-btn.selected[data-grade="partial"] {
   background: #fff9ef;
   border-color: #facb86;
 }
@@ -892,7 +907,7 @@ button {
 .grade-mini.O {
   color: #17ab78;
 }
-.grade-mini.△ {
+.grade-mini.�좎룞�� {
   color: #e89930;
 }
 .grade-mini.X {
@@ -1264,4 +1279,40 @@ button {
     transition: none !important;
     animation: none !important;
   }
+}
+
+.question-image {
+  width: min(100%, 172px);
+  margin: 16px auto 4px;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+}
+.question-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 172px;
+  object-fit: contain;
+}
+
+.question-image-pair {
+  width: min(100%, 360px);
+  margin: 16px auto 4px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.question-image-pair .question-image {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 9px;
+}
+.question-image-pair .question-image img {
+  width: 100%;
+  height: 130px;
 }
